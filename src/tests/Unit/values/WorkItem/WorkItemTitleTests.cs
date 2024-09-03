@@ -4,7 +4,7 @@ using OperationResult;
 
 namespace Unit.Values.WorkItem;
 
-public class WorkTitleTests
+public class WorkItemTitleTests
 {
     /// <summary>
     /// Test to check if WorkItemTitle value object will let you create an empty title.

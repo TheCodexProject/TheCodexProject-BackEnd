@@ -44,7 +44,7 @@ public class WorkItemTitle
    /// Validates the work item title.
    /// </summary>
    /// <param name="value">Title to be validated.</param>
-   /// <returns> A named tuple contains a <see cref="bool"/> indicating if the validation has failed or not, and a list of errors that has ocurred.</returns>
+   /// <returns> A <see cref="Result"/> indicating if the validation was a success or not.</returns>
    private static Result Validate(string value)
    {
        var errors = new List<Exception>();

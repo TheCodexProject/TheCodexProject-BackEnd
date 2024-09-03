@@ -6,7 +6,7 @@ public class WorkItem
 {
     public Guid Id { get; set; }
     public WorkItemTitle Title { get; set; }
-    public string Description { get; set; }
+    public WorkItemDescription Description { get; set; }
     
     public DateTime CreatedAt { get; set; }
     public string CreatedBy { get; set; }
