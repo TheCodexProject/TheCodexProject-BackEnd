@@ -11,4 +11,8 @@
       <Folder Include="repositories\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\tools\OperationResult\OperationResult.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -26,4 +26,8 @@
       <ProjectReference Include="..\..\core\tools\OperationResult\OperationResult.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="models\WorkItem\" />
+    </ItemGroup>
+
 </Project>

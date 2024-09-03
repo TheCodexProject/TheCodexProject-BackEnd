@@ -1,9 +1,11 @@
-namespace domain.models;
+using domain.models.workItem.values;
+
+namespace domain.models.workItem;
 
 public class WorkItem
 {
     public Guid Id { get; set; }
-    public string Title { get; set; }
+    public WorkItemTitle Title { get; set; }
     public string Description { get; set; }
     
     public DateTime CreatedAt { get; set; }
@@ -11,8 +13,8 @@ public class WorkItem
     public DateTime? UpdatedAt { get; set; }
     public string UpdatedBy { get; set; }
     
-    public string Status { get; set; }
-    public string Priority { get; set; }
-    public string Type { get; set; }
+    public WorkItemStatus Status { get; set; }
+    public WorkItemPriority Priority { get; set; }
+    public WorkItemType Type { get; set; }
     public string Assignee { get; set; }
 }
