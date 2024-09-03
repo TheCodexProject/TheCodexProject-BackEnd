@@ -36,7 +36,7 @@ public class WorkTitleTests
         
         //Assert
         Assert.True(result.IsFailure);
-        Assert.Contains(result.Errors, e => e is WorkItemNoTitleException);
+        Assert.Contains(result.Errors, e => e is WorkItemTitleEmptyException);
     }
 
     /// <summary>

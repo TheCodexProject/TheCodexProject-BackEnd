@@ -30,9 +30,9 @@ public class WorkItemTitle
    { 
       var result = Validate(value);
       
-      if (result.isFailure) 
+      if (result.IsFailure) 
       { 
-           return Result<WorkItemTitle>.Failure(result.errors.ToArray());
+           return Result<WorkItemTitle>.Failure(result.Errors.ToArray());
       }
       
       var workItemTitle = new WorkItemTitle(value);
@@ -45,14 +45,14 @@ public class WorkItemTitle
    /// </summary>
    /// <param name="value">Title to be validated.</param>
    /// <returns> A named tuple contains a <see cref="bool"/> indicating if the validation has failed or not, and a list of errors that has ocurred.</returns>
-   private static (bool isFailure, IEnumerable<Exception> errors) Validate(string value)
+   private static Result Validate(string value)
    {
        var errors = new List<Exception>();
        
        if (string.IsNullOrEmpty(value)) 
        {
-            errors.Add(new WorkItemNoTitleException());
-            return (true, errors);
+            errors.Add(new WorkItemTitleEmptyException());
+            return Result.Failure(errors.ToArray());
        }
 
        switch (value)
@@ -64,8 +64,8 @@ public class WorkItemTitle
                errors.Add(new WorkItemTitleTooLongException());
                break;
        }
-       
-       return (errors.Any(), errors);
+
+       return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success();
    }
    
    /// <summary>
