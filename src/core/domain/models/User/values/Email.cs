@@ -110,5 +110,26 @@ public class Email
         return true;
     }
 
+    /// <summary>
+    /// Implicitly converts a <see cref="Email"/> to a <see cref="string"/>.
+    /// </summary>
+    /// <param name="email">The email itself.</param>
+    /// <returns>The inner value of the <see cref="Email"/> object.</returns>
+    public static implicit operator string(Email email) => email.Value;
+
+    /// <summary>
+    /// Equality operator for the <see cref="Email"/> class.
+    /// </summary>
+    /// <param name="obj">Object to check.</param>
+    /// <returns>A <see cref="bool"/> indicating if it is equal.</returns>
+    public override bool Equals(object? obj)
+    {
+        if (obj is Email email)
+        {
+            return email.Value == Value;
+        }
+
+        return false;
+    }
 
 }
