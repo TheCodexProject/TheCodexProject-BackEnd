@@ -1,4 +1,6 @@
+using domain.models.Users;
 using domain.models.workItem.values;
+
 
 namespace domain.models.workItem;
 
@@ -16,5 +18,5 @@ public class WorkItem
     public WorkItemStatus Status { get; set; }
     public WorkItemPriority Priority { get; set; }
     public WorkItemType Type { get; set; }
-    public string Assignee { get; set; }
+    public User Assignee { get; set; }
 }

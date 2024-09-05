@@ -1,6 +1,6 @@
-using domain.models.User.values;
+using domain.models.Users.values;
 
-namespace domain.models.User;
+namespace domain.models.Users;
 
 public class User
 {
