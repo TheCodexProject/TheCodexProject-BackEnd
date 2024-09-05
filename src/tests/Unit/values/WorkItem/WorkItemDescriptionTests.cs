@@ -53,7 +53,7 @@ public class WorkItemDescriptionTests
         var result = WorkItemDescription.Create(description);
         
         // Assert
-        Assert.False(result.IsFailure);
+        Assert.True(result.IsSuccess);
     }
 
     /// <summary>
@@ -69,6 +69,6 @@ public class WorkItemDescriptionTests
         var result = WorkItemDescription.Create(description);
         
         // Assert
-        Assert.False(result.IsFailure);
+        Assert.True(result.IsSuccess);
     }
 }

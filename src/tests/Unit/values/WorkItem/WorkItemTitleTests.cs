@@ -85,7 +85,7 @@ public class WorkItemTitleTests
         var result = WorkItemTitle.Create(value);
 
         // Assert
-        Assert.False(result.IsFailure);
+        Assert.True(result.IsSuccess);
         Assert.Equal(value,result.Value);
     }
     
@@ -135,7 +135,7 @@ public class WorkItemTitleTests
         var result = WorkItemTitle.Create(value);
 
         // Assert
-        Assert.False(result.IsFailure);
+        Assert.True(result.IsSuccess);
         Assert.Equal(value,result.Value);
     }
     
@@ -152,7 +152,7 @@ public class WorkItemTitleTests
         var result = WorkItemTitle.Create(value);
 
         // Assert
-        Assert.False(result.IsFailure);
+        Assert.True(result.IsSuccess);
         Assert.Equal(value,result.Value);
     }
 }

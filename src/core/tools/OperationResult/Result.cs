@@ -35,6 +35,11 @@ public class Result
     public bool IsFailure => _isFailure;
     
     /// <summary>
+    /// A flag that indicates if the result is a success.
+    /// </summary>
+    public bool IsSuccess => !_isFailure;
+    
+    /// <summary>
     /// The collection of errors that have occurred.
     /// </summary>
     public IEnumerable<Exception> Errors => _errors;
@@ -88,6 +93,11 @@ public class Result<T>
     /// A flag that indicates if the result is a failure.
     /// </summary>
     public bool IsFailure { get; private set; }
+    
+    /// <summary>
+    /// A flag that indicates if the result is a success.
+    /// </summary>
+    public bool IsSuccess => !IsFailure;
 
     /// <summary>
     /// The collection of errors that have occurred.
