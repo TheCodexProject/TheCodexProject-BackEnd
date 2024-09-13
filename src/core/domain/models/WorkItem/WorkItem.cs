@@ -15,7 +15,7 @@ public class WorkItem
     /// <summary>
     /// The unique identifier for the WorkItem.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; private set; }
 
     /// <summary>
     /// Holds the date and time when the WorkItem was created. (No modifiable)
@@ -29,12 +29,12 @@ public class WorkItem
     /// <summary>
     /// Holds the date and time when the WorkItem was last updated.
     /// </summary>
-    public DateTime? UpdatedAt { get; set; }
+    public DateTime? UpdatedAt { get; private set; }
     
     /// <summary>
     /// Holds the user who last updated the WorkItem.
     /// </summary>
-    public string? UpdatedBy { get; set; }
+    public string? UpdatedBy { get; private set; }
     
     #endregion
     
@@ -43,20 +43,32 @@ public class WorkItem
     /// <summary>
     /// Holds the title of the WorkItem.
     /// </summary>
-    public WorkItemTitle Title { get; set; }
+    public WorkItemTitle Title { get; private set; }
     
     /// <summary>
     /// Holds the description of the WorkItem.
     /// </summary>
-    public WorkItemDescription Description { get; set; }
+    public WorkItemDescription Description { get; private set; }
     
     /// <summary>
     /// Holds the status of the WorkItem.
     /// </summary>
-    public WorkItemStatus Status { get; set; }
-    public WorkItemPriority Priority { get; set; }
-    public WorkItemType Type { get; set; }
-    public User? Assignee { get; set; }
+    public WorkItemStatus Status { get; private set; }
+    
+    /// <summary>
+    /// Holds the priority of the WorkItem.
+    /// </summary>
+    public WorkItemPriority Priority { get; private set; }
+    
+    /// <summary>
+    /// Holds the type of the WorkItem.
+    /// </summary>
+    public WorkItemType Type { get; private set; }
+    
+    /// <summary>
+    /// Holds the user who is assigned to the WorkItem.
+    /// </summary>
+    public User? Assignee { get; private set; }
 
     #endregion
 
