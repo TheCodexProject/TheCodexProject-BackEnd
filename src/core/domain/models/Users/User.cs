@@ -5,11 +5,30 @@ namespace domain.models.Users;
 
 public class User
 {
+    /// <summary>
+    /// The unique identifier of the user.
+    /// </summary>
     public Guid Id { get; private set; }
     // TODO: Should include, when the user was created?
     
+    /// <summary>
+    /// Holds the first name of the user.
+    /// </summary>
     public FirstName FirstName { get; private set; }
+    
+    /// <summary>
+    /// Holds the last name of the user.
+    /// </summary>
     public LastName LastName { get; private set; }
+    
+    /// <summary>
+    /// Holds the full name of the user.
+    /// </summary>
+    public string FullName => $"{FirstName.Value} {LastName.Value}";
+    
+    /// <summary>
+    /// Holds the email of the user.
+    /// </summary>
     public Email Email { get; private set; }
     // TODO: Add a username & password property here, when working on authentication.
 
@@ -22,6 +41,10 @@ public class User
         Id = Guid.NewGuid();
     }
 
+    /// <summary>
+    /// Creates a new instance of <see cref="User"/>.
+    /// </summary>
+    /// <returns></returns>
     public static User Create()
     {
         // ! No validation needed here
