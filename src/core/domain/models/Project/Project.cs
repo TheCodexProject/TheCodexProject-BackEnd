@@ -1,10 +1,5 @@
 ﻿using domain.models.Project.values;
 using domain.models.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace domain.models.Project;
 
@@ -19,6 +14,10 @@ public class Project
     public ProjectTimeRange StartAndEndTime { get; set; } // Both start and end time. They can both respectively be accessed through their getters.
     
     public ProjectMethodology ProjectMethodology { get; set; }
+
+    public ProjectStatus Status { get; set; }
+
+    public ProjectPriority Priority { get; set; }
 
     public User Assignee { get; set; }
 }
