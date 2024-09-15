@@ -3,7 +3,7 @@ using OperationResult;
 
 namespace domain.models.Workspace.values;
 
-internal class WorkspaceTitle
+public class WorkspaceTitle
 {
     private string Value { get; }
 
@@ -89,9 +89,4 @@ internal class WorkspaceTitle
 
         return false;
     }
-
-
-
-
-
 }

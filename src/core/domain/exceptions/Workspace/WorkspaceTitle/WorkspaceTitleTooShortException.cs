@@ -7,7 +7,7 @@ namespace domain.exceptions.Workspace.WorkspaceTitle;
 /// Exception for when a WorkItem is created with a too short title
 /// </summary>
 [Serializable]
-internal class WorkspaceTitleTooShortException : Exception
+public class WorkspaceTitleTooShortException : Exception
 {
     /// <summary>
     /// The default message.

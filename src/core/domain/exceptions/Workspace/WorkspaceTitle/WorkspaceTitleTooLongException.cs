@@ -6,7 +6,7 @@ namespace domain.exceptions.Workspace.WorkspaceTitle;
 /// Exception for when a Workspace is created with a title that are too long.
 /// </summary>
 [Serializable]
-internal class WorkspaceTitleTooLongException : Exception
+public class WorkspaceTitleTooLongException : Exception
 {
     /// <summary>
     /// The default message.

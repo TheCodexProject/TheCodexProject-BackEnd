@@ -6,7 +6,7 @@ namespace domain.exceptions.Workspace.WorkspaceTitle;
 /// Exception for when a Workspace is created without a title.
 /// </summary>
 [Serializable]
-internal class WorkspaceTitleEmptyException : Exception
+public class WorkspaceTitleEmptyException : Exception
 {
     /// <summary>
     /// The default message.
