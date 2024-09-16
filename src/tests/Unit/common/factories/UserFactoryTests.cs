@@ -1,4 +1,4 @@
-using domain.models.Users;
+using domain.models.user;
 
 namespace Unit.common.factories;
 

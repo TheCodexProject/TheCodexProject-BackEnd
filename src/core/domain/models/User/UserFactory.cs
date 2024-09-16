@@ -1,7 +1,7 @@
 using System.Reflection;
-using domain.models.Users.values;
+using domain.models.user.values;
 
-namespace domain.models.Users;
+namespace domain.models.user;
 
 public class UserFactory
 {

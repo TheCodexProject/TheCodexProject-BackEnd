@@ -1,5 +1,5 @@
 using domain.exceptions.User.LastName;
-using domain.models.Users.values;
+using domain.models.user.values;
 
 namespace Unit.values.User;
 
