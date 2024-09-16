@@ -1,3 +1,4 @@
+using domain.models.shared;
 using domain.models.user.values;
 using OperationResult;
 
@@ -8,29 +9,24 @@ public class User
     /// <summary>
     /// The unique identifier of the user.
     /// </summary>
-    public Guid Id { get; private set; }
-    // TODO: Should include, when the user was created?
+    public Id<User> Id { get; private set; }
     
     /// <summary>
     /// Holds the first name of the user.
     /// </summary>
-    public FirstName FirstName { get; private set; }
+    public FirstName? FirstName { get; private set; }
     
     /// <summary>
     /// Holds the last name of the user.
     /// </summary>
-    public LastName LastName { get; private set; }
-    
-    /// <summary>
-    /// Holds the full name of the user.
-    /// </summary>
-    public string FullName => $"{FirstName.Value} {LastName.Value}";
+    public LastName? LastName { get; private set; }
     
     /// <summary>
     /// Holds the email of the user.
     /// </summary>
-    public Email Email { get; private set; }
-    // TODO: Add a username & password property here, when working on authentication.
+    public Email? Email { get; private set; }
+    
+    // TODO: Add a encrypted password property here, when working on authentication.
 
     /// <summary>
     /// Constructs a new instance of <see cref="User"/> with a set of default values.
@@ -38,7 +34,7 @@ public class User
     private User()
     {
         // "Specific" values
-        Id = Guid.NewGuid();
+        Id = Id<User>.Create();
     }
 
     /// <summary>
@@ -57,9 +53,9 @@ public class User
     /// </summary>
     /// <param name="firstName">The new first name.</param>
     /// <returns>A <see cref="Result"/> indicating if the update was a success.</returns>
-    public Result UpdateFirstName(FirstName firstName)
+    public Result UpdateFirstName(string firstName)
     {
-        var result = FirstName.Create(firstName.Value);
+        var result = FirstName.Create(firstName);
         
         // ! Validation
         // Are there any specific things that we would like to validate, when the first name is updated?
@@ -70,7 +66,7 @@ public class User
         }
         
         // Update the first name.
-        FirstName = firstName;
+        FirstName = result;
         
         return Result.Success();
     }
@@ -80,9 +76,9 @@ public class User
     /// </summary>
     /// <param name="lastName">The new last name</param>
     /// <returns>A <see cref="Result"/> indicating if the update was a success.</returns>
-    public Result UpdateLastName(LastName lastName)
+    public Result UpdateLastName(string lastName)
     {
-        var result = LastName.Create(lastName.Value);
+        var result = LastName.Create(lastName);
         
         // ! Validation
         // Are there any specific things that we would like to validate, when the last name is updated?
@@ -93,7 +89,7 @@ public class User
         }
         
         // Update the last name.
-        LastName = lastName;
+        LastName = result;
         
         return Result.Success();
     }
@@ -103,9 +99,9 @@ public class User
     /// </summary>
     /// <param name="email">The new Email.</param>
     /// <returns>A <see cref="Result"/> indicating if the update was a success.</returns>
-    public Result UpdateEmail(Email email)
+    public Result UpdateEmail(string email)
     {
-        var result = Email.Create(email.Value);
+        var result = Email.Create(email);
         
         // ! Validation
         // Are there any specific things that we would like to validate, when the email is updated?
@@ -116,7 +112,7 @@ public class User
         }
         
         // Update the email.
-        Email = email;
+        Email = result;
         
         return Result.Success();
     }
