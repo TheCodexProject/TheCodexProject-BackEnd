@@ -6,6 +6,11 @@
     public enum ProjectMethodology
     {
         /// <summary>
+        /// The project uses no methodology, this is the default
+        /// </summary>
+        None,
+
+        /// <summary>
         /// The project uses an Agile model as it's framework
         /// </summary>
         Agile,
@@ -23,6 +28,6 @@
         /// <summary>
         /// The project uses SCRUM as it's framework
         /// </summary>
-        SCRUM
+        SCRUM,
     }
 }
