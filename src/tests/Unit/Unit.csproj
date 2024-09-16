@@ -28,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="common\" />
       <Folder Include="models\WorkItem\" />
       <Folder Include="values\WorkSpace\" />
     </ItemGroup>
