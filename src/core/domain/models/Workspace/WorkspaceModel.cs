@@ -4,7 +4,7 @@ using domain.models.Workspace.values;
 using OperationResult;
 
 namespace domain.models.Workspace;
-public class Workspace
+public class WorkspaceModel
 {
 
     #region properties
@@ -29,21 +29,21 @@ public class Workspace
     #region constructors
 
     /// <summary>
-    /// Creates a new instance of <see cref="Workspace"/> with default values.
+    /// Creates a new instance of <see cref="WorkspaceModel"/> with default values.
     /// </summary>
-    private Workspace()
+    private WorkspaceModel()
     {
         Id = Guid.NewGuid();
         Resources = new List<IResource>();
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="WorkItem"/> with default values.
+    /// Creates a new instance of <see cref="WorkspaceModel"/> with default values.
     /// </summary>
-    /// <returns>A <see cref="Workspace"/></returns>
-    public static Workspace Create()
+    /// <returns>A <see cref="WorkspaceModel"/></returns>
+    public static WorkspaceModel Create()
     {
-        return new Workspace();
+        return new WorkspaceModel();
     }
 
     #endregion
