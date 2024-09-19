@@ -4,7 +4,7 @@ using domain.models.workItem.values;
 
 namespace domain.models.workItem;
 
-public class WorkItem
+public class Project
 {
     public Guid Id { get; set; }
     public WorkItemTitle Title { get; set; }

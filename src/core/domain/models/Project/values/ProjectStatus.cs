@@ -5,12 +5,12 @@
         /// <summary>
         /// The project is not started yet
         /// </summary>
-        Not_Started,
+        NotStarted,
 
         /// <summary>
         /// The project is in progress
         /// </summary>
-        In_Progress,
+        InProgress,
 
         /// <summary>
         /// The project is completed
@@ -20,6 +20,6 @@
         /// <summary>
         /// The project is on hold
         /// </summary>
-        On_Hold
+        OnHold
     }
 }

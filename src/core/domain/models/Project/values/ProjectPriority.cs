@@ -21,6 +21,6 @@ namespace domain.models.Project.values
         /// <summary>
         /// The project is high priority
         /// </summary>
-        high,
+        High,
     }
 }
