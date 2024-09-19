@@ -1,5 +1,5 @@
+using domain.exceptions;
 using domain.exceptions.User.Email;
-using domain.models.user.values;
 using OperationResult;
 
 namespace domain.models.user;
@@ -12,8 +12,8 @@ public class UserBuilder
     /// <summary>
     /// The user that is being built.
     /// </summary>
-    private User _user = User.Create();
-    private List<Exception> _errors = new();
+    private readonly User _user = User.Create();
+    private readonly List<Exception> _errors = new();
     
     /// <summary>
     /// Starts the creation of a new user.
@@ -81,25 +81,30 @@ public class UserBuilder
     /// <returns>A <see cref="User"/> with the specified values.</returns>
     public Result<User> Build()
     {
-        // Check if there are any EmailEmptyExceptions
+        // ?Check if there are any EmailEmptyExceptions
         if(_errors.Any(e => e is EmailEmptyException))
         {
-            // If there is remove the EmailEmptyException from the errors.
-            _errors.RemoveAll(e => e is EmailEmptyException);
+            // * Take out the EmailEmptyException from the errors and store it in a variable.
+            var emailEmptyException = _errors.First(e => e is EmailEmptyException);
             
-            // Add a new RequiredFieldMissingException to the errors.
-            // TODO ADD RequiredFieldMissingException INNER EmailEmptyException
+            // * Remove the EmailEmptyException from the errors.
+            _errors.Remove(emailEmptyException);
+            
+            // * Add a new RequiredFieldMissingException to the errors as the first exception. (With the EmailEmptyException as the inner exception)
+            var requiredFieldMissingException = new RequiredFieldMissingException("Email is required.", emailEmptyException);
+            _errors.Insert(0, requiredFieldMissingException);
         }
         else
         {
-            // ! If there aren't any EmailEmptyExceptions.
+            // ? If there are no EmailEmptyExceptions, check if the Email is null. (Since Email is a required field)
             if(_user.Email == null)
             {
-                // ! Add a new EmailEmptyException to the errors.
-                // TODO ADD EmailEmptyException
+                // * Add an RequiredFieldMissingException to the errors, since Email is required (+ Add the EmailEmptyException as the inner exception)
+                _errors.Add(new RequiredFieldMissingException("Email is required.", new EmailEmptyException()));
             }
         }
         
+        // ? Check if there are any errors in the list.
         return _errors.Any() ? Result<User>.Failure(_errors.ToArray()) : _user;
     }
 }
