@@ -18,7 +18,7 @@ public class Project
     
     public ProjectMethodology? ProjectMethodology { get; set; }
 
-    public ProjectStatus ProjectStatus { get; set; }
+    public ProjectStatus? ProjectStatus { get; set; }
 
     public ProjectPriority? ProjectPriority { get; set; }
 
@@ -34,6 +34,7 @@ public class Project
         ProjectMethodology = ProjectConstants.DefaultMethodology;
         ProjectStatus = ProjectConstants.DefaultStatus;
         ProjectPriority = ProjectConstants.DefaultPriority;
+        StartAndEndTime = ProjectConstants.DefaultTimeRange;
     }
 
     public static Project Create()
