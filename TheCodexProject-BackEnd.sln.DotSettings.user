@@ -1,20 +1,6 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=131f82cd_002Dc1f6_002D4826_002Db1ad_002D357bb3099346/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="WorkItemFactoryTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4d38f699_002D9b94_002D494c_002Db458_002D7e1887233a50/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="MakeDefault" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::8756D7FF-C3EF-4FD0-BCE5-40E19AA5C038::net8.0::Unit.common.factories.UserFactoryTests.Create_Empty_User_Should_Have_Id&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4112c0fe_002Dc59e_002D4b4d_002D93d2_002D1d23da7ac86f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="EmailTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::8756D7FF-C3EF-4FD0-BCE5-40E19AA5C038::net8.0::Unit.values.User.EmailTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::8756D7FF-C3EF-4FD0-BCE5-40E19AA5C038::net8.0::Unit.values.User.FirstNameTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::8756D7FF-C3EF-4FD0-BCE5-40E19AA5C038::net8.0::Unit.Values.WorkItem.WorkItemDescriptionTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::8756D7FF-C3EF-4FD0-BCE5-40E19AA5C038::net8.0::unittesting.Tools.OperationResult.ResultTests.Success_Result_IsFailure_Should_Be_False&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::8756D7FF-C3EF-4FD0-BCE5-40E19AA5C038::net8.0::Unit.values.User.LastNameTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ab5f6a0c_002Dd3b3_002D486f_002Db12a_002Db679ffd40794/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Create_Empty_User_Should_Have_Id" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::8756D7FF-C3EF-4FD0-BCE5-40E19AA5C038::net8.0::Unit.common.factories.UserFactoryTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::8756D7FF-C3EF-4FD0-BCE5-40E19AA5C038::net8.0::Unit.models.User.UserBuilderTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

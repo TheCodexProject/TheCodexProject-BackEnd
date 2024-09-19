@@ -1,5 +1,6 @@
 using domain.exceptions;
 using domain.exceptions.User.Email;
+using domain.interfaces;
 using OperationResult;
 
 namespace domain.models.user;
@@ -7,7 +8,7 @@ namespace domain.models.user;
 /// <summary>
 /// A builder class for the <see cref="User"/> class.
 /// </summary>
-public class UserBuilder
+public class UserBuilder : IBuilder<User>
 {
     /// <summary>
     /// The user that is being built.
@@ -25,11 +26,24 @@ public class UserBuilder
     }
     
     /// <summary>
+    /// Generates a default user with default values.
+    /// </summary>
+    /// <returns></returns>
+    public Result<User> MakeDefault()
+    {
+        return new UserBuilder()
+            .WithFirstName(UserConstants.FirstName)
+            .WithLastName(UserConstants.LastName)
+            .WithEmail(UserConstants.Email)
+            .Build();
+    }
+    
+    /// <summary>
     /// Sets the first name of the user.
     /// </summary>
     /// <param name="firstName">The first name to be set.</param>
     /// <returns></returns>
-    public Result<UserBuilder> WithFirstName(string firstName)
+    public UserBuilder WithFirstName(string firstName)
     {
         var result = _user.UpdateFirstName(firstName);
         
@@ -46,7 +60,7 @@ public class UserBuilder
     /// </summary>
     /// <param name="lastName">The last name to be set.</param>
     /// <returns></returns>
-    public Result<UserBuilder> WithLastName(string lastName)
+    public UserBuilder WithLastName(string lastName)
     {
         var result = _user.UpdateLastName(lastName);
         
@@ -63,7 +77,7 @@ public class UserBuilder
     /// </summary>
     /// <param name="email">The email to be set.</param>
     /// <returns></returns>
-    public Result<UserBuilder> WithEmail(string email)
+    public UserBuilder WithEmail(string email)
     {
         var result = _user.UpdateEmail(email);
         
