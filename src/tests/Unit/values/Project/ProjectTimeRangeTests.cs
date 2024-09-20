@@ -11,8 +11,8 @@ public class ProjectTimeRangeTests
     public void TimeRange_End_Cannot_Be_Before_Start()
     {
         // Arrange
-        var StartTime = DateTime.MinValue.AddDays(2); 
-        var EndTime = DateTime.MinValue.AddDays(1); // subtracting a day from MinValue would cause error, so we add a day to MinValue´and add 2 days to the StartTime to prevent this
+        var StartTime = DateTime.MinValue.AddDays(2);
+        var EndTime = DateTime.MinValue.AddDays(1);
 
         // Act
         var result = ProjectTimeRange.Create(StartTime, EndTime);

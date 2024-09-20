@@ -25,8 +25,8 @@ public class ProjectBuilderTests
         Assert.Equal(ProjectConstants.DefaultStatus, project.Value.ProjectStatus);
         Assert.Equal(ProjectConstants.DefaultPriority, project.Value.ProjectPriority);
         Assert.Equal(ProjectConstants.DefaultMethodology, project.Value.ProjectMethodology);
-        Assert.Equal(ProjectConstants.DefaultStartTime, project.Value.StartAndEndTime.Start);
-        Assert.Equal(ProjectConstants.DefaultEndTime, project.Value.StartAndEndTime.End);
+        Assert.Equal(ProjectConstants.DefaultStartTime, project.Value.ProjectStartTime);
+        Assert.Equal(ProjectConstants.DefaultEndTime, project.Value.ProjectEndTime);
     }
 
     /// <summary>

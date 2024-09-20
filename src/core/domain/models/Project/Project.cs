@@ -14,8 +14,10 @@ public class Project
 
     public ProjectDescription? ProjectDescription { get; set; }
 
-    public ProjectTimeRange? StartAndEndTime { get; set; } // Both start and end time. They can both respectively be accessed through their getters.
-    
+    public DateTime? ProjectStartTime { get; set; }
+
+    public DateTime? ProjectEndTime { get; set; }
+
     public ProjectMethodology? ProjectMethodology { get; set; }
 
     public ProjectStatus? ProjectStatus { get; set; }
@@ -97,9 +99,11 @@ public class Project
         return Result.Success();
     }
 
-    public Result UpdateTimeRange(ProjectTimeRange timeRagne)
+    public Result UpdateTimeRange(DateTime startTime, DateTime endTime)
     {
-        StartAndEndTime = timeRagne;
+        ProjectTimeRange datetimes = ProjectTimeRange.Create(startTime, endTime);
+        ProjectStartTime = datetimes.Start;
+        ProjectEndTime = datetimes.End;
         return Result.Success();
     }
 }

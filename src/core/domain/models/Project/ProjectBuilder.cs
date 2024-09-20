@@ -37,7 +37,7 @@ public class ProjectBuilder
             .WithStatus(ProjectConstants.DefaultStatus)
             .WithPriority(ProjectConstants.DefaultPriority)
             .WithMethodology(ProjectConstants.DefaultMethodology)
-            .WithTimeRange(ProjectTimeRange.Create(ProjectConstants.DefaultStartTime, ProjectConstants.DefaultEndTime))
+            .WithTimeRange(ProjectConstants.DefaultStartTime, ProjectConstants.DefaultEndTime)
             .Build();
     }
 
@@ -89,9 +89,9 @@ public class ProjectBuilder
         return this;
     }
 
-    public ProjectBuilder WithTimeRange(ProjectTimeRange timeRange)
+    public ProjectBuilder WithTimeRange(DateTime startTime, DateTime endTime)
     {
-        var result = _project.UpdateTimeRange(timeRange);
+        var result = _project.UpdateTimeRange(startTime, endTime);
 
         if (result.IsFailure)
         {

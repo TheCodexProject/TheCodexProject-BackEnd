@@ -9,6 +9,8 @@ public class ProjectTimeRange
     public DateTime Start { get; private set; }
     public DateTime End { get; private set; }
 
+    public DateTime[] dateTimes { get; private set; }
+
     /// <summary>
     /// Used for EFC (Entity Framework Core)
     /// </summary>
@@ -22,6 +24,7 @@ public class ProjectTimeRange
     {
         Start = start;
         End = end;
+        dateTimes = [start, end];
     }
 
     /// <summary>
