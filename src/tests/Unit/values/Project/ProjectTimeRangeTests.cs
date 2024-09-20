@@ -11,8 +11,8 @@ public class ProjectTimeRangeTests
     public void TimeRange_End_Cannot_Be_Before_Start()
     {
         // Arrange
-        var StartTime = DateTime.Today;
-        var EndTime = DateTime.Today.AddDays(-1);
+        var StartTime = DateTime.MinValue.AddDays(2); 
+        var EndTime = DateTime.MinValue.AddDays(1); // subtracting a day from MinValue would cause error, so we add a day to MinValue´and add 2 days to the StartTime to prevent this
 
         // Act
         var result = ProjectTimeRange.Create(StartTime, EndTime);
@@ -28,8 +28,8 @@ public class ProjectTimeRangeTests
     public void TimeRange_Can_Have_Same_Start_And_End()
     {
         // Arrange
-        var StartTime = DateTime.Today;
-        var EndTime = DateTime.Today;
+        var StartTime = DateTime.MinValue;
+        var EndTime = DateTime.MinValue;
 
         // Act
         var result = ProjectTimeRange.Create(StartTime, EndTime);
@@ -45,8 +45,8 @@ public class ProjectTimeRangeTests
     public void TimeRange_Valid_TimeRange_Returns_Success()
     {
         // Arrange
-        var StartTime = DateTime.Today;
-        var EndTime = DateTime.Today.AddDays(1);
+        var StartTime = DateTime.MinValue;
+        var EndTime = DateTime.MinValue.AddDays(1);
 
         // Act
         var result = ProjectTimeRange.Create(StartTime, EndTime);
@@ -62,8 +62,8 @@ public class ProjectTimeRangeTests
     public void TimeRange_Should_Return_Correct_StartTime()
     {
         // Arrange
-        var StartTime = DateTime.Today;
-        var EndTime = DateTime.Today.AddDays(1);
+        var StartTime = DateTime.MinValue;
+        var EndTime = DateTime.MinValue.AddDays(1);
 
         // Act
         var result = ProjectTimeRange.Create(StartTime, EndTime);
@@ -79,8 +79,8 @@ public class ProjectTimeRangeTests
     public void TimeRange_Should_Return_Correct_EndTime()
     {
         // Arrange
-        var StartTime = DateTime.Today;
-        var EndTime = DateTime.Today.AddDays(1);
+        var StartTime = DateTime.MinValue;
+        var EndTime = DateTime.MinValue.AddDays(1);
 
         // Act
         var result = ProjectTimeRange.Create(StartTime, EndTime);

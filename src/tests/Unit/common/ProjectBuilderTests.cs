@@ -9,25 +9,6 @@ namespace Unit.values.Project;
 public class ProjectBuilderTests
 {
     /// <summary>
-    /// Test to see that Empty Project is created with default values. (Title)
-    /// </summary>
-    [Fact]
-    public void Create_Empty_WorkItem_Should_Have_Default_Values_Title()
-    {
-        // Arrange
-        var title = ProjectConstants.DefaultTitle;
-
-        // Act
-        var project = ProjectBuilder.Create()
-            .Build();
-
-        var result = project.Value.ProjectTitle;
-
-        // Assert
-        Assert.Equal(result, title);
-    }
-
-    /// <summary>
     /// Test to see that a Project is created with default values.
     /// </summary>
     [Fact]
@@ -44,7 +25,8 @@ public class ProjectBuilderTests
         Assert.Equal(ProjectConstants.DefaultStatus, project.Value.ProjectStatus);
         Assert.Equal(ProjectConstants.DefaultPriority, project.Value.ProjectPriority);
         Assert.Equal(ProjectConstants.DefaultMethodology, project.Value.ProjectMethodology);
-        Assert.Equal(ProjectConstants.DefaultTimeRange, project.Value.StartAndEndTime);
+        Assert.Equal(ProjectConstants.DefaultStartTime, project.Value.StartAndEndTime.Start);
+        Assert.Equal(ProjectConstants.DefaultEndTime, project.Value.StartAndEndTime.End);
     }
 
     /// <summary>
@@ -111,7 +93,8 @@ public class ProjectBuilderTests
 
         // Act
         var project = ProjectBuilder.Create()
-            .WithDescription(emptyDescription)
+            .WithTitle("Title")
+            .WithDescription("")
             .Build();
 
         // Assert

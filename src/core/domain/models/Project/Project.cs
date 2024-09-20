@@ -22,19 +22,10 @@ public class Project
 
     public ProjectPriority? ProjectPriority { get; set; }
 
-    public User Assignee { get; set; }
-
     private Project()
     {
         // "Specific" values
         Id = Guid.NewGuid();
-
-        ProjectTitle = ProjectConstants.DefaultTitle;
-        ProjectDescription = ProjectConstants.DefaultDescription;
-        ProjectMethodology = ProjectConstants.DefaultMethodology;
-        ProjectStatus = ProjectConstants.DefaultStatus;
-        ProjectPriority = ProjectConstants.DefaultPriority;
-        StartAndEndTime = ProjectConstants.DefaultTimeRange;
     }
 
     public static Project Create()

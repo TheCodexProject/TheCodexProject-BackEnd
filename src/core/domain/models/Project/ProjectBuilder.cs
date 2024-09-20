@@ -37,7 +37,7 @@ public class ProjectBuilder
             .WithStatus(ProjectConstants.DefaultStatus)
             .WithPriority(ProjectConstants.DefaultPriority)
             .WithMethodology(ProjectConstants.DefaultMethodology)
-            .WithTimeRange(ProjectConstants.DefaultTimeRange)
+            .WithTimeRange(ProjectTimeRange.Create(ProjectConstants.DefaultStartTime, ProjectConstants.DefaultEndTime))
             .Build();
     }
 
