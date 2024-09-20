@@ -1,14 +1,11 @@
 ﻿
 using domain.models.Interfaces;
-using domain.models.Workspace.values;
+using domain.models.workspace.values;
 using OperationResult;
 
-namespace domain.models.Workspace;
-public class WorkspaceModel
+namespace domain.models.workspace;
+public class Workspace
 {
-
-    #region properties
-
     /// <summary>
     /// The unique identifier for the WorkItem.
     /// </summary>
@@ -20,33 +17,27 @@ public class WorkspaceModel
     public WorkspaceTitle? Title { get; private set; }
 
     /// <summary>
-    /// Holds a list of resources.
+    /// Holds a list of resources, this cloud be a projekts or documents.
     /// </summary>
     public List<IResource> Resources { get; private set; }
 
-    #endregion
-
-    #region constructors
-
     /// <summary>
-    /// Creates a new instance of <see cref="WorkspaceModel"/> with default values.
+    /// Creates a new instance of <see cref="Workspace"/> with default values.
     /// </summary>
-    private WorkspaceModel()
+    private Workspace()
     {
         Id = Guid.NewGuid();
         Resources = new List<IResource>();
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="WorkspaceModel"/> with default values.
+    /// Creates a new instance of <see cref="Workspace"/> with default values.
     /// </summary>
-    /// <returns>A <see cref="WorkspaceModel"/></returns>
-    public static WorkspaceModel Create()
+    /// <returns>A <see cref="Workspace"/></returns>
+    public static Workspace Create()
     {
-        return new WorkspaceModel();
+        return new Workspace();
     }
-
-    #endregion
 
     /// <summary>
     /// Updates the title of the WorkItem.
@@ -89,13 +80,15 @@ public class WorkspaceModel
     /// <returns>A <see cref="Result"/> indicating if the update was a success.</returns>
     public Result RemoveResource(IResource resource)
     {
-        var test = Resources.Remove(resource);
-        
-        if (!test)
+        var existingResource = Resources.FirstOrDefault(r => r.Equals(resource));
+
+        if (existingResource == null)
         {
+            // Resource not found, return failure.
             return Result.Failure();
         }
 
+        Resources.Remove(existingResource);
         return Result.Success();
     }
 }

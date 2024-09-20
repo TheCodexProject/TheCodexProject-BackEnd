@@ -1,12 +1,13 @@
 ﻿using domain.exceptions;
 using domain.exceptions.Workspace.WorkspaceTitle;
+using domain.interfaces;
 using OperationResult;
 
-namespace domain.models.Workspace;
+namespace domain.models.workspace;
 
-public class WorkspaceBuilder
+public class WorkspaceBuilder : IBuilder<Workspace>
 {
-    private readonly WorkspaceModel workspaceModel = WorkspaceModel.Create();
+    private readonly Workspace workspace = Workspace.Create();
     private readonly List<Exception> _errors = new();
 
 
@@ -31,7 +32,7 @@ public class WorkspaceBuilder
     /// <param name="value">Title to use.</param>
     public WorkspaceBuilder withTitle(string title)
     {
-        var result = workspaceModel.UpdateTitle(title);
+        var result = workspace.UpdateTitle(title);
 
         if (result.IsFailure)
         {
@@ -44,7 +45,7 @@ public class WorkspaceBuilder
     /// <summary>
     /// Function to the build <see cref="WorkspaceBuilder"/>.
     /// </summary>
-    public Result<WorkspaceModel> build() {
+    public Result<Workspace> Build() {
 
         // Required fields
         if (_errors.Any(e => e is WorkspaceTitleEmptyException)) {
@@ -59,20 +60,20 @@ public class WorkspaceBuilder
             _errors.Insert(0, requiredFieldMissingException);
 
         } else {
-            if (workspaceModel.Title == null)
+            if (workspace.Title == null)
             {
                 _errors.Add(new RequiredFieldMissingException("Title is required", new WorkspaceTitleEmptyException()));
             }
         }
 
-        return _errors.Any() ? Result<WorkspaceModel>.Failure(_errors.ToArray()) : workspaceModel;
+        return _errors.Any() ? Result<Workspace>.Failure(_errors.ToArray()) : workspace;
     }
 
     /// <summary>
     /// Function to the build with some default values <see cref="WorkspaceBuilder"/>.
     /// </summary>
-    public Result<WorkspaceModel> buildWithDefaults()
+    public Result<Workspace> MakeDefault()
     {
-        return withTitle(WorkspaceConstants.DefaultTitle).build();
+        return withTitle(WorkspaceConstants.DefaultTitle).Build();
     }
 }

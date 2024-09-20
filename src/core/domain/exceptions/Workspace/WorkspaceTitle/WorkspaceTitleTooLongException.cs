@@ -11,7 +11,7 @@ public class WorkspaceTitleTooLongException : Exception
     /// <summary>
     /// The default message.
     /// </summary>
-    public WorkspaceTitleTooLongException() : base("Title cannot be more then 10 characters") { }
+    public WorkspaceTitleTooLongException() : base("Title cannot be more then 75 characters") { }
 
     /// <summary>
     /// Used for custom messages.

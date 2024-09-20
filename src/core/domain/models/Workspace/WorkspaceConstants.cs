@@ -1,4 +1,4 @@
-﻿namespace domain.models.Workspace;
+﻿namespace domain.models.workspace;
 
 public static class WorkspaceConstants
 {

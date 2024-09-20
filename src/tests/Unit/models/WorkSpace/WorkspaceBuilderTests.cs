@@ -1,9 +1,9 @@
 ﻿using domain.exceptions.Workspace.WorkspaceTitle;
 using domain.exceptions;
-using domain.models.Workspace;
+using domain.models.workspace;
 using Xunit;
 
-namespace Unit.models.WorkSpaceTests;
+namespace Unit.models.WorkspaceTests;
 
 public class WorkspaceBuilderTests
 {
@@ -15,7 +15,7 @@ public class WorkspaceBuilderTests
         var builder = WorkspaceBuilder.Create();
 
         // Act
-        var result = builder.buildWithDefaults();
+        var result = builder.MakeDefault();
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -32,7 +32,7 @@ public class WorkspaceBuilderTests
         // Act
         var result = builder
             .withTitle(WorkspaceConstants.DefaultTitle)
-            .build();
+            .Build();
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -46,7 +46,7 @@ public class WorkspaceBuilderTests
         var builder = WorkspaceBuilder.Create();
 
         // Act
-        var result = builder.build();
+        var result = builder.Build();
 
         // Assert
         Assert.True(result.IsFailure);
@@ -60,7 +60,7 @@ public class WorkspaceBuilderTests
         var builder = WorkspaceBuilder.Create();
 
         // Act
-        var result = builder.withTitle("").build();
+        var result = builder.withTitle("").Build();
 
         // Assert
         Assert.True(result.IsFailure);
@@ -74,7 +74,7 @@ public class WorkspaceBuilderTests
         var builder = WorkspaceBuilder.Create();
 
         // Act
-        var result = builder.withTitle(null).build();
+        var result = builder.withTitle(null).Build();
 
         // Assert
         Assert.True(result.IsFailure);
@@ -90,7 +90,7 @@ public class WorkspaceBuilderTests
         // Act
         var result = builder
             .withTitle("") // Empty title triggers WorkspaceTitleEmptyException
-            .build();
+            .Build();
 
         // Assert
         Assert.True(result.IsFailure);

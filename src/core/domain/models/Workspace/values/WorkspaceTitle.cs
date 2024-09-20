@@ -1,7 +1,7 @@
 ﻿using domain.exceptions.Workspace.WorkspaceTitle;
 using OperationResult;
 
-namespace domain.models.Workspace.values;
+namespace domain.models.workspace.values;
 
 public class WorkspaceTitle
 {
@@ -60,7 +60,7 @@ public class WorkspaceTitle
             case { Length: < 3 }:
                 errors.Add(new WorkspaceTitleTooShortException());
                 break;
-            case { Length: >= 10 }:
+            case { Length: >= 75 }:
                 errors.Add(new WorkspaceTitleTooLongException());
                 break;
         }

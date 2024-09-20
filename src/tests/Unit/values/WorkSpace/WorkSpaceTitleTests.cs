@@ -1,14 +1,8 @@
 ﻿using domain.exceptions.Workspace.WorkspaceTitle;
-using domain.models.Workspace.values;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using domain.models.workspace.values;
 
-namespace Unit.values.WorkSpaceTest;
-
-public class WorkSpaceTitleTests
+namespace Unit.values.WorkspaceTest;
+public class WorkspaceTitleTests
 {
     /// <summary>
     /// Test to check if WorkSpaceTitle value object will let you create an empty title.
@@ -97,10 +91,10 @@ public class WorkSpaceTitleTests
     /// Test to check that you cannot create a title with more than 10 characters.
     /// </summary>
     [Fact]
-    public void Title_Cannot_Be_More_Than_10_Characters_Is_Failure()
+    public void Title_Cannot_Be_More_Than_75_Characters_Is_Failure()
     {
         // Arrange
-        var value = "A".PadRight(10, 'A');
+        var value = "A".PadRight(75, 'A');
 
         // Act
         var result = WorkspaceTitle.Create(value);
@@ -113,10 +107,10 @@ public class WorkSpaceTitleTests
     /// Test to ensure that it hands the user the correct exception.
     /// </summary>
     [Fact]
-    public void Title_Cannot_Be_More_Than_10_Characters_Exception_Check()
+    public void Title_Cannot_Be_More_Than_75_Characters_Exception_Check()
     {
         // Arrange
-        var value = "A".PadRight(10, 'A');
+        var value = "A".PadRight(75, 'A');
 
         // Act
         var result = WorkspaceTitle.Create(value);
@@ -130,10 +124,10 @@ public class WorkSpaceTitleTests
     /// Test to check that you are allow to create a title with 10 characters.
     /// </summary>
     [Fact]
-    public void Title_Can_Be_Created_With_10_Characters()
+    public void Title_Can_Be_Created_With_75_Characters()
     {
         // Arrange
-        var value = "A".PadRight(9, 'A');
+        var value = "A".PadRight(74, 'A');
 
         // Act
         var result = WorkspaceTitle.Create(value);
