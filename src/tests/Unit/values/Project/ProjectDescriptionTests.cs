@@ -1,5 +1,5 @@
-﻿using domain.exceptions.Project.ProjectDescription;
-using domain.models.Project.values;
+﻿using domain.exceptions.project.ProjectDescription;
+using domain.models.project.values;
 
 namespace Unit.values.Project;
 

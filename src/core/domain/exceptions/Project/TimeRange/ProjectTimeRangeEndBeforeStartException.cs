@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace domain.exceptions.Project.TimeRange;
+namespace domain.exceptions.project.TimeRange;
 
 [Serializable]
 public class ProjectTimeRangeEndBeforeStartException : Exception

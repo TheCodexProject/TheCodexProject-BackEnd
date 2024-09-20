@@ -1,8 +1,8 @@
 ﻿using domain.exceptions;
-using domain.exceptions.Project.ProjectDescription;
-using domain.exceptions.Project.ProjectTitle;
-using domain.models.Project;
-using domain.models.Project.values;
+using domain.exceptions.project.ProjectDescription;
+using domain.exceptions.project.ProjectTitle;
+using domain.models.project;
+using domain.models.project.values;
 
 namespace Unit.values.Project;
 

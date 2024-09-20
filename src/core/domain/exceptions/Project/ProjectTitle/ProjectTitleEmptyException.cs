@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace domain.exceptions.Project.ProjectTitle;
+namespace domain.exceptions.project.ProjectTitle;
 
 /// <summary>
 /// Exception for when a Project is created without a title.

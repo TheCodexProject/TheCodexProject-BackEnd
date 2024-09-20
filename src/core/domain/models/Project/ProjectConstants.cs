@@ -1,4 +1,4 @@
-﻿using domain.models.Project.values;
+﻿using domain.models.project.values;
 using domain.models.workItem.values;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace domain.models.Project;
+namespace domain.models.project;
 
 public class ProjectConstants
 {

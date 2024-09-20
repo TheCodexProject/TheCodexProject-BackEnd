@@ -1,12 +1,12 @@
 ﻿using domain.exceptions;
-using domain.exceptions.Project.ProjectTitle;
-using domain.models.Project.values;
+using domain.exceptions.project.ProjectTitle;
+using domain.models.project.values;
 using domain.models.Users;
 using domain.models.workItem.values;
 using OperationResult;
 using System.Reflection;
 
-namespace domain.models.Project;
+namespace domain.models.project;
 
 /// <summary>
 /// The ProjectBuilder can be used to create different types of "Template" Projects.

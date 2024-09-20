@@ -1,6 +1,6 @@
-﻿using domain.models.Project.values;
+﻿using domain.models.project.values;
 
-namespace Unit.values.Project;
+namespace Unit.values.project;
 
 public class ProjectTimeRangeTests
 {

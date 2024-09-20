@@ -1,8 +1,8 @@
-﻿using domain.exceptions.Project.TimeRange;
+﻿using domain.exceptions.project.TimeRange;
 using domain.models.workItem.values;
 using OperationResult;
 
-namespace domain.models.Project.values;
+namespace domain.models.project.values;
 
 public class ProjectTimeRange
 {

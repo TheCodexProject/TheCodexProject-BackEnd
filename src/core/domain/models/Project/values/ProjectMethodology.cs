@@ -1,4 +1,4 @@
-﻿namespace domain.models.Project.values
+﻿namespace domain.models.project.values
 {
     /// <summary>
     /// An enum representing the methodology of a project.

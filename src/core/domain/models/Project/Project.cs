@@ -1,28 +1,30 @@
-﻿using domain.models.Project.values;
+﻿using domain.models.project.values;
 using domain.models.Users;
 using domain.models.workItem;
 using domain.models.workItem.values;
 using OperationResult;
 
-namespace domain.models.Project;
+namespace domain.models.project;
 
 public class Project
 {
     public Guid Id { get; set; }
 
-    public ProjectTitle ProjectTitle { get; set; }
+    public ProjectTitle ProjectTitle { get; private set; }
 
-    public ProjectDescription? ProjectDescription { get; set; }
+    public ProjectDescription? ProjectDescription { get; private set; }
 
-    public DateTime? ProjectStartTime { get; set; }
+    public ProjectTimeRange? ProjectTimeRange { get; private set; }
 
-    public DateTime? ProjectEndTime { get; set; }
+    public DateTime? ProjectStartTime => ProjectTimeRange.Start;
 
-    public ProjectMethodology? ProjectMethodology { get; set; }
+    public DateTime? ProjectEndTime => ProjectTimeRange.End;
 
-    public ProjectStatus? ProjectStatus { get; set; }
+    public ProjectMethodology? ProjectMethodology { get; private set; }
 
-    public ProjectPriority? ProjectPriority { get; set; }
+    public ProjectStatus? ProjectStatus { get; private set; }
+
+    public ProjectPriority? ProjectPriority { get; private set; }
 
     private Project()
     {
@@ -101,9 +103,7 @@ public class Project
 
     public Result UpdateTimeRange(DateTime startTime, DateTime endTime)
     {
-        ProjectTimeRange datetimes = ProjectTimeRange.Create(startTime, endTime);
-        ProjectStartTime = datetimes.Start;
-        ProjectEndTime = datetimes.End;
+        ProjectTimeRange = ProjectTimeRange.Create(startTime, endTime);
         return Result.Success();
     }
 }

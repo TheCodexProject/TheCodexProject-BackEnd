@@ -1,4 +1,4 @@
-﻿namespace domain.models.Project.values
+﻿namespace domain.models.project.values
 {
     public enum ProjectStatus
     {

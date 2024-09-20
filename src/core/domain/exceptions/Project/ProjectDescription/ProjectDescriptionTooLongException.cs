@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace domain.exceptions.Project.ProjectDescription;
+namespace domain.exceptions.project.ProjectDescription;
 
 [Serializable]
 public class ProjectDescriptionTooLongException : Exception

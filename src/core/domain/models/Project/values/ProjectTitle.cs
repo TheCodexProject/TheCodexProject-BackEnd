@@ -1,9 +1,9 @@
-﻿using domain.exceptions.Project.ProjectTitle;
+﻿using domain.exceptions.project.ProjectTitle;
 using domain.exceptions.WorkItem.WorkItemTitle;
 using domain.models.workItem.values;
 using OperationResult;
 
-namespace domain.models.Project.values;
+namespace domain.models.project.values;
 
 public class ProjectTitle
 {

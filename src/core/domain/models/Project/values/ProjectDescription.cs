@@ -1,7 +1,7 @@
-﻿using domain.exceptions.Project.ProjectDescription;
+﻿using domain.exceptions.project.ProjectDescription;
 using OperationResult;
 
-namespace domain.models.Project.values;
+namespace domain.models.project.values;
 
 public class ProjectDescription
 {

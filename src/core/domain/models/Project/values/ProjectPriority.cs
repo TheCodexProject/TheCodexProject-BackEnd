@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace domain.models.Project.values
+namespace domain.models.project.values
 {
     public enum ProjectPriority
     {

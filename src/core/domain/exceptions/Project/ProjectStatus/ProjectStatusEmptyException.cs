@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace domain.exceptions.Project.ProjectStatus;
+namespace domain.exceptions.project.ProjectStatus;
 
 /// <summary>
 /// Exception for when a Project is created without a status.
