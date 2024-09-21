@@ -1,8 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-
 namespace domain.exceptions;
-
 
 /// <summary>
 /// This exception is to be thrown when a required field is missing.
@@ -17,7 +15,6 @@ public class RequiredFieldMissingException : Exception
     /// <param name="message">Exception message to be shown to the user.</param>
     /// <param name="innerException">Exception that triggered this.</param>
     public RequiredFieldMissingException(string message, Exception innerException) : base(message, innerException) { }
-
 
     /// <summary>
     /// Used to serialize the exception.
