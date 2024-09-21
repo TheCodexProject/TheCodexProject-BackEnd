@@ -28,7 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="models\WorkItem\" />
+      <Folder Include="common\" />
     </ItemGroup>
 
 </Project>
