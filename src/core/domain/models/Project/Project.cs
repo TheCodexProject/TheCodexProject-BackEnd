@@ -1,5 +1,5 @@
 ﻿using domain.models.project.values;
-using domain.models.Users;
+using domain.models.user;
 using domain.models.workItem;
 using domain.models.workItem.values;
 using OperationResult;

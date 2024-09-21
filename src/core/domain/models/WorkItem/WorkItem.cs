@@ -1,6 +1,6 @@
 using System.Dynamic;
 using domain.models.shared;
-using domain.models.Users;
+using domain.models.user;
 using domain.models.workItem.values;
 using OperationResult;
 

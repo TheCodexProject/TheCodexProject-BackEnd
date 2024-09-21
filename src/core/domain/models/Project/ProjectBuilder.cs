@@ -1,7 +1,7 @@
 ﻿using domain.exceptions;
 using domain.exceptions.project.ProjectTitle;
 using domain.models.project.values;
-using domain.models.Users;
+using domain.models.user;
 using domain.models.workItem.values;
 using OperationResult;
 using System.Reflection;

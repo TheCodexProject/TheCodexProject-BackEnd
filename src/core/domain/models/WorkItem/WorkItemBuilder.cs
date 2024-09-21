@@ -1,7 +1,7 @@
 using domain.exceptions;
 using domain.exceptions.WorkItem.WorkItemTitle;
 using domain.interfaces;
-using domain.models.Users;
+using domain.models.user;
 using domain.models.workItem.values;
 using OperationResult;
 
