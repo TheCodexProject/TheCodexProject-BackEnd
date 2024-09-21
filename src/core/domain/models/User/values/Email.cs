@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 using domain.exceptions.User.Email;
 using OperationResult;
 
-namespace domain.models.Users.values;
+namespace domain.models.user.values;
 
 public class Email
 {

@@ -1,29 +1,29 @@
-using domain.exceptions.User.FirstName;
+using domain.exceptions.User.LastName;
 using OperationResult;
 
-namespace domain.models.Users.values;
+namespace domain.models.user.values;
 
-public class FirstName
+public class LastName
 {
     public string Value { get; }
     
-    private FirstName(string value)
+    private LastName(string value)
     {
         Value = value;
     }
     
-    public static Result<FirstName> Create(string value)
+    public static Result<LastName> Create(string value)
     {
         var result = Validate(value);
         
         if (result.IsFailure)
         {
-            return Result<FirstName>.Failure(result.Errors.ToArray());
+            return Result<LastName>.Failure(result.Errors.ToArray());
         }
         
-        var firstName = new FirstName(value);
+        var lastName = new LastName(value);
         
-        return Result<FirstName>.Success(firstName);
+        return Result<LastName>.Success(lastName);
     }
     
     private static Result Validate(string value)
@@ -32,19 +32,19 @@ public class FirstName
         
         if(string.IsNullOrWhiteSpace(value))
         {
-            errors.Add(new FirstNameEmptyException());
+            errors.Add(new LastNameEmptyException());
             return Result.Failure(errors.ToArray());
         }
         
         if(value.Length < 2)
         {
-            errors.Add(new FirstNameTooShortException());
+            errors.Add(new LastNameTooShortException());
             return Result.Failure(errors.ToArray());
         }
         
-        if(value.Length > 25)
+        if(value.Length > 60)
         {
-            errors.Add(new FirstNameTooLongException());
+            errors.Add(new LastNameTooLongException());
             return Result.Failure(errors.ToArray());
         }
         
