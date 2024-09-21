@@ -1,5 +1,6 @@
 ﻿
 using domain.models.Interfaces;
+using domain.models.shared;
 using domain.models.workspace.values;
 using OperationResult;
 
@@ -9,7 +10,7 @@ public class Workspace
     /// <summary>
     /// The unique identifier for the WorkItem.
     /// </summary>
-    public Guid Id { get; private set; }
+    public Id<Workspace> Id { get; private set; }
 
     /// <summary>
     /// Holds the title of the Workspace.
@@ -26,7 +27,7 @@ public class Workspace
     /// </summary>
     private Workspace()
     {
-        Id = Guid.NewGuid();
+        Id = Id<Workspace>.Create();
         Resources = new List<IResource>();
     }
 
