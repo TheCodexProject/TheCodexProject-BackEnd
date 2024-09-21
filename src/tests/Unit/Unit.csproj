@@ -27,8 +27,4 @@
       <ProjectReference Include="..\..\core\tools\OperationResult\OperationResult.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="common\" />
-    </ItemGroup>
-
 </Project>
