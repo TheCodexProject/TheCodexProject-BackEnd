@@ -1,4 +1,5 @@
 ﻿using domain.models.project.values;
+using domain.models.shared;
 using domain.models.user;
 using domain.models.workItem;
 using domain.models.workItem.values;
@@ -8,7 +9,7 @@ namespace domain.models.project;
 
 public class Project
 {
-    public Guid Id { get; set; }
+    public Id<Project> Id { get; set; }
 
     public ProjectTitle ProjectTitle { get; private set; }
 
@@ -29,7 +30,7 @@ public class Project
     private Project()
     {
         // "Specific" values
-        Id = Guid.NewGuid();
+        Id = Id<Project>.Create();
     }
 
     public static Project Create()
