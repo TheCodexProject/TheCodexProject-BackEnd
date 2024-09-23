@@ -5,7 +5,7 @@ namespace domain.models.workspace.values;
 
 public class WorkspaceTitle
 {
-    private string Value { get; }
+    public string Value { get; }
 
     /// <summary>
     /// Used for EFC (Entity Framework Core)
