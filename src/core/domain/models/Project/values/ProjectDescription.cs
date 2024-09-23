@@ -5,7 +5,7 @@ namespace domain.models.project.values;
 
 public class ProjectDescription
 {
-    private string Value { get; }
+    public string Value { get; }
 
     /// <summary>
     /// Used for EFC (Entity Framework Core)
