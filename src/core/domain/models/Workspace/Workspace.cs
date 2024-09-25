@@ -3,6 +3,8 @@ using domain.models.Interfaces;
 using domain.models.shared;
 using domain.models.workspace.values;
 using OperationResult;
+using domain.models.project;
+using domain.models.user;
 
 namespace domain.models.workspace;
 public class Workspace
@@ -18,9 +20,23 @@ public class Workspace
     public WorkspaceTitle? Title { get; private set; }
 
     /// <summary>
-    /// Holds a list of resources, this cloud be a projekts or documents.
+    /// Holds a IEnumerable of projects.
     /// </summary>
-    public List<IResource> Resources { get; private set; }
+    public IEnumerable<Project> Projects => _projects;
+    private readonly List<Project> _projects;
+
+    /// <summary>
+    /// Holds a IEnumerable of Contacts/User.
+    /// </summary>
+    public IEnumerable<User> Contacts => _contacts;
+    private readonly List<User> _contacts;
+
+    // TODO
+    /// <summary>
+    /// Holds a IEnumerable of Documents.
+    /// </summary>
+    //public IEnumerable<User> Documents => _documents;
+    //private readonly List<User> _documents;
 
     /// <summary>
     /// Creates a new instance of <see cref="Workspace"/> with default values.
@@ -28,7 +44,8 @@ public class Workspace
     private Workspace()
     {
         Id = Id<Workspace>.Create();
-        Resources = new List<IResource>();
+        _projects = new List<Project>();
+        _contacts = new List<User>();
     }
 
     /// <summary>
@@ -64,32 +81,64 @@ public class Workspace
     }
 
     /// <summary>
-    /// Adds a resource to resources
+    /// Adds a project to the list of projects.
     /// </summary>
-    /// <param name="resource">The resource to add.</param>
-    /// <returns>A <see cref="Result"/> indicating if the update was a success.</returns>
-    public Result AddResource(IResource resource)
+    /// <param name="project">The project to add.</param>
+    public void AddProject(Project project)
     {
-        Resources.Add(resource);
+        if (project == null)
+        {
+            throw new ArgumentNullException(nameof(project));
+        }
+        _projects.Add(project);
+    }
+
+    /// <summary>
+    /// Removes a project from the list of projects.
+    /// </summary>
+    /// <param name="project">The project to remove.</param>
+    public Result RemoveProject(Project project)
+    {
+        var existingProject = _projects.FirstOrDefault(p => p.Equals(project));
+
+        if (existingProject == null)
+        {
+            // Project not found, return failure.
+            return Result.Failure();
+        }
+
+        _projects.Remove(existingProject);
         return Result.Success();
     }
 
     /// <summary>
-    /// Removes a resource from resources
+    /// Adds a contact to the list of contacts.
     /// </summary>
-    /// <param name="resource">The resource to remove.</param>
-    /// <returns>A <see cref="Result"/> indicating if the update was a success.</returns>
-    public Result RemoveResource(IResource resource)
+    /// <param name="contact">The contact to add.</param>
+    public void AddContact(User contact)
     {
-        var existingResource = Resources.FirstOrDefault(r => r.Equals(resource));
-
-        if (existingResource == null)
+        if (contact == null)
         {
-            // Resource not found, return failure.
+            throw new ArgumentNullException(nameof(contact));
+        }
+        _contacts.Add(contact);
+    }
+
+    /// <summary>
+    /// Removes a contact from the list of contacts.
+    /// </summary>
+    /// <param name="contact">The contact to remove.</param>
+    public Result RemoveContact(User contact)
+    {
+        var existingContact = _contacts.FirstOrDefault(c => c.Equals(contact));
+
+        if (existingContact == null)
+        {
+            // Contact not found, return failure.
             return Result.Failure();
         }
 
-        Resources.Remove(existingResource);
+        _contacts.Remove(existingContact);
         return Result.Success();
     }
 }
