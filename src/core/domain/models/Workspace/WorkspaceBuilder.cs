@@ -74,6 +74,6 @@ public class WorkspaceBuilder : IBuilder<Workspace>
     /// </summary>
     public Result<Workspace> MakeDefault()
     {
-        return withTitle(WorkspaceConstants.DefaultTitle).Build();
+        return new WorkspaceBuilder().withTitle(WorkspaceConstants.DefaultTitle).Build();
     }
 }
