@@ -53,6 +53,20 @@ public class WorkItem
     /// </summary>
     public User? Assignee { get; private set; }
     
+    // TODO: Add the list of documentation to the WorkItem.
+    // public List<Documentation> Documentations { get; private set; }
+    
+    /// <summary>
+    /// A list of sub items that are related to the WorkItem.
+    /// </summary>
+    public List<WorkItem> SubItems { get; private set; }
+    
+    /// <summary>
+    /// A list of tasks needed to be completed before the WorkItem can be started.
+    /// </summary>
+    public List<WorkItem> Dependencies { get; private set; }
+    
+    
     /// <summary>
     /// Constructs a new instance of <see cref="WorkItem"/> with a set of default values.
     /// </summary>
@@ -203,6 +217,50 @@ public class WorkItem
     public Result InitializeMetadata(User createdBy)
     {
         Metadata = Metadata.Create(createdBy.Email);
+        return Result.Success();
+    }
+
+    public Result AddSubItem(WorkItem item)
+    {
+        // ! VALIDATION
+        // Are there any specific things that we would like to validate, when the user adds a sub item?
+        
+        // Add the sub item.
+        SubItems.Add(item);
+        
+        return Result.Success();
+    }
+    
+    public Result AddDependency(WorkItem item)
+    {
+        // ! VALIDATION
+        // Are there any specific things that we would like to validate, when the user adds a dependency?
+        
+        // Add the dependency.
+        Dependencies.Add(item);
+        
+        return Result.Success();
+    }
+    
+    public Result RemoveSubItem(WorkItem item)
+    {
+        // ! VALIDATION
+        // Are there any specific things that we would like to validate, when the user removes a sub item?
+        
+        // Remove the sub item.
+        SubItems.Remove(item);
+        
+        return Result.Success();
+    }
+    
+    public Result RemoveDependency(WorkItem item)
+    {
+        // ! VALIDATION
+        // Are there any specific things that we would like to validate, when the user removes a dependency?
+        
+        // Remove the dependency.
+        Dependencies.Remove(item);
+        
         return Result.Success();
     }
 }
