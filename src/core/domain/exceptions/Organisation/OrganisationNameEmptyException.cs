@@ -11,7 +11,7 @@ public class OrganisationNameEmptyException : Exception
     /// <summary>
     /// The default message.
     /// </summary>
-    public OrganisationNameEmptyException() : base("Title cannot be empty, it must be between 1 and 100 characters.") { }
+    public OrganisationNameEmptyException() : base("Title cannot be empty, it must be between 2 and 100 characters.") { }
     
     /// <summary>
     /// Used for custom messages.

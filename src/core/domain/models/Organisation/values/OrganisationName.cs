@@ -50,7 +50,7 @@ public class OrganisationName
         
         switch (value)
         {
-            case { Length: < 1}:
+            case { Length: < 2}:
                 errors.Add(new OrganisationNameTooShortException());
                 break;
             case { Length: > 100}:

@@ -9,9 +9,9 @@ public class Organisation : IOwnership
 {
     public Id<Organisation> Id { get; }
     
-    public OrganisationName? Name { get; }
-    
-    public IEnumerable<IOwnership> Owners { get; }
+    public OrganisationName? Name { get; private set; }
+
+    public List<IOwnership>? Owners { get; }
     
     // TODO: Add the following property after merge.
     // public IEnumerable<Documentation> Docs { get; }
@@ -36,6 +36,8 @@ public class Organisation : IOwnership
             return Result.Failure(result.Errors.ToArray());
         }
         
+        Name = result.Value;
+        
         return Result.Success();
     }
 
@@ -44,7 +46,7 @@ public class Organisation : IOwnership
     public Result AddOwner(IOwnership owner)
     {
         // What validation should be done here, if any?
-        Owners.Append(owner);
+        Owners?.Add(owner);
         
         return Result.Success();
     }
