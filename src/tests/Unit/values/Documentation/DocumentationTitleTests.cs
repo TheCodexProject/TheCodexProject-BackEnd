@@ -3,7 +3,7 @@ using domain.exceptions.project.ProjectTitle;
 using domain.models.documentation.values;
 using Xunit;
 
-namespace Unit.values.Documentation
+namespace Unit.values.documentation
 {
     public class DocumentationTitleTests
     {

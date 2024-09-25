@@ -1,7 +1,8 @@
 ﻿using domain.exceptions.documentation.documentationFormat;
+using domain.exceptions.project.ProjectTitle;
 using OperationResult;
 
-namespace domain.models.Documentation.values;
+namespace domain.models.documentation.values;
 public class DocumentationFormat
 {
     public string Value { get; }
@@ -58,6 +59,15 @@ public class DocumentationFormat
         {
             case { Length: > 5 }:
                 errors.Add(new DocumentationFormatTooLongException());
+                break;
+            case { Length: < 2 }:
+                errors.Add(new DocumentationFormatTooShortException());
+                break;
+            case string v when !v.Contains("."):
+                errors.Add(new DocumentationFormatDoesNotFollowConventionException());
+                break;
+            case string v when v[0] != '.':
+                errors.Add(new DocumentationFormatDoesNotStartWithDot());
                 break;
         }
 

@@ -1,0 +1,60 @@
+﻿using domain.exceptions.project.ProjectTitle;
+using domain.exceptions;
+using domain.models.documentation;
+using domain.models.project;
+using OperationResult;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace domain.models.documentation;
+
+public class DocumentationBuilder
+{
+    private readonly Documentation _documentation = Documentation.Create();
+    private List<Exception> _errors = new();
+
+    public static DocumentationBuilder Create()
+    {
+        return new DocumentationBuilder();
+    }
+
+    public Result<Documentation> MakeDefault()
+    {
+        return new DocumentationBuilder()
+            .WithTitle(DocumentationConstants.DefaultTitle)
+            .WithFormat(DocumentationConstants.DefaultFormat)
+            .Build();
+    }
+
+    public DocumentationBuilder WithTitle(string title)
+    {
+        var result = _documentation.UpdateTitle(title);
+
+        if (result.IsFailure)
+        {
+            _errors.AddRange(result.Errors);
+        }
+
+        return this;
+    }
+
+    public DocumentationBuilder WithFormat(string format)
+    {
+        var result = _documentation.UpdateFormat(format);
+
+        if (result.IsFailure)
+        {
+            _errors.AddRange(result.Errors);
+        }
+
+        return this;
+    }
+
+    public Result<Documentation> Build()
+    {
+        return _errors.Any() ? Result<Documentation>.Failure(_errors.ToArray()) : _documentation;
+    }
+}
