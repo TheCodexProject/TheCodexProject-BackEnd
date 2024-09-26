@@ -1,4 +1,5 @@
-﻿using domain.exceptions.documentation.documentationContent;
+﻿using domain.exceptions;
+using domain.exceptions.documentation.documentationContent;
 using domain.exceptions.documentation.documentationFormat;
 using domain.exceptions.documentation.documentationTitle;
 using domain.exceptions.project.ProjectTitle;
@@ -42,7 +43,7 @@ namespace Unit.values.documentation
 
             // Assert
             Assert.True(result.IsFailure);
-            Assert.Contains(result.Errors, e => e is DocumentationTitleEmptyException);
+            Assert.Contains(result.Errors, e => e is RequiredFieldMissingException);
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace Unit.values.documentation
 
             // Assert
             Assert.True(documentation.IsFailure);
-            Assert.Contains(documentation.Errors, e => e is DocumentationTitleEmptyException);
+            Assert.Contains(documentation.Errors, e => e is RequiredFieldMissingException);
         }
 
         /// <summary>
@@ -196,7 +197,7 @@ namespace Unit.values.documentation
 
             // Assert
             Assert.True(result.IsFailure);
-            Assert.Contains(result.Errors, e => e is DocumentationContentEmptyException);
+            Assert.Contains(result.Errors, e => e is RequiredFieldMissingException);
         }
 
         /// <summary>
@@ -212,7 +213,7 @@ namespace Unit.values.documentation
 
             // Assert
             Assert.True(documentation.IsFailure);
-            Assert.Contains(documentation.Errors, e => e is DocumentationContentEmptyException);
+            Assert.Contains(documentation.Errors, e => e is RequiredFieldMissingException);
         }
     }
 }
