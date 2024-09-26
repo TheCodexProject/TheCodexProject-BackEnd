@@ -1,14 +1,12 @@
-﻿using domain.exceptions.Workspace.WorkspaceTitle;
-using domain.exceptions;
+﻿using domain.exceptions;
 using domain.interfaces;
 using domain.models.workspace;
 using OperationResult;
 using domain.exceptions.iteration.iterationTitle;
-using domain.models.Iteration;
 
 namespace domain.models.iteration;
 
-internal class IterationBuilder : IBuilder<Iteration>
+public class IterationBuilder : IBuilder<Iteration>
 {
     private readonly Iteration iteration = Iteration.Create();
     private readonly List<Exception> _errors = new();

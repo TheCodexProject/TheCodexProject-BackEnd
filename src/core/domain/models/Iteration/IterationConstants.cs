@@ -1,5 +1,5 @@
 ﻿
-namespace domain.models.Iteration;
+namespace domain.models.iteration;
 
 public static class IterationConstants
 {

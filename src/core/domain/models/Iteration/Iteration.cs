@@ -1,10 +1,6 @@
 ﻿using domain.models.iteration.values;
-using domain.models.project;
 using domain.models.shared;
-using domain.models.user;
 using domain.models.workItem;
-using domain.models.workspace;
-using domain.models.workspace.values;
 using OperationResult;
 
 namespace domain.models.iteration;
@@ -12,17 +8,17 @@ namespace domain.models.iteration;
 public class Iteration
 {
     /// <summary>
-    /// The unique identifier for the WorkItem.
+    /// The unique identifier for the Iteration.
     /// </summary>
     public Id<Iteration> Id { get; private set; }
 
     // <summary>
-    /// Holds the title of the Workspace.
+    /// Holds the title of the Iteration.
     /// </summary>
     public IterationTitle? Title { get; private set; }
 
     /// <summary>
-    /// Holds a IEnumerable of Contacts/User.
+    /// Holds a IEnumerable of WorkItems.
     /// </summary>
     public IEnumerable<Id<WorkItem>> WorkItems => _workItems;
     private readonly List<Id<WorkItem>> _workItems;
@@ -39,7 +35,7 @@ public class Iteration
     /// <summary>
     /// Creates a new instance of <see cref="Iteration"/> with default values.
     /// </summary>
-    /// <returns>A <see cref="Workspace"/></returns>
+    /// <returns>A <see cref="Iteration"/></returns>
     public static Iteration Create()
     {
         return new Iteration();
