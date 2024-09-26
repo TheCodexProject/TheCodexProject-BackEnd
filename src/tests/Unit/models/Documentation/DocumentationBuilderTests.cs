@@ -1,4 +1,5 @@
-﻿using domain.exceptions.documentation.documentationFormat;
+﻿using domain.exceptions.documentation.documentationContent;
+using domain.exceptions.documentation.documentationFormat;
 using domain.exceptions.documentation.documentationTitle;
 using domain.exceptions.project.ProjectTitle;
 using domain.models.documentation;
@@ -22,6 +23,7 @@ namespace Unit.values.documentation
             Assert.True(documentation.IsSuccess);
             Assert.Equal(DocumentationConstants.DefaultTitle, documentation.Value.DocumentationTitle);
             Assert.Equal(DocumentationConstants.DefaultFormat, documentation.Value.DocumentationFormat);
+            Assert.Equal(DocumentationConstants.DefaultContent, documentation.Value.DocumentationContent);
         }
 
         /// <summary>
@@ -176,6 +178,41 @@ namespace Unit.values.documentation
             Assert.True(documentation.IsSuccess);
             Assert.Equal(validTitle, documentation.Value.DocumentationTitle);
             Assert.Equal(validFormat, documentation.Value.DocumentationFormat);
+        }
+
+        /// <summary>
+        /// Test to see that creating Documentation with empty content fails.
+        /// </summary>
+        [Fact]
+        public void DocumentationBuilder_With_Empty_Content_Should_Fail()
+        {
+            // Arrange
+            var builder = DocumentationBuilder.Create();
+
+            // Act
+            var result = builder
+                .WithContent("")
+                .Build();
+
+            // Assert
+            Assert.True(result.IsFailure);
+            Assert.Contains(result.Errors, e => e is DocumentationContentEmptyException);
+        }
+
+        /// <summary>
+        /// Test to see that creating Documentation with a null content fails.
+        /// </summary>
+        [Fact]
+        public void Create_Documentation_With_Null_Content_Should_Fail()
+        {
+            // Act
+            var documentation = DocumentationBuilder.Create()
+                .WithContent(null)
+                .Build();
+
+            // Assert
+            Assert.True(documentation.IsFailure);
+            Assert.Contains(documentation.Errors, e => e is DocumentationContentEmptyException);
         }
     }
 }

@@ -45,7 +45,7 @@ public class DocumentationFormat
     /// </summary>
     /// <param name="value">Format to be validated.</param>
     /// <returns> A <see cref="Result"/> indicating if the validation was a success or not.</returns>
-    public static Result Validate(string value)
+    private static Result Validate(string value)
     {
         var errors = new List<Exception>();
 

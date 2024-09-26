@@ -1,5 +1,4 @@
 ﻿using domain.models.documentation.values;
-using domain.models.documentation.values;
 using domain.models.project;
 using domain.models.shared;
 using OperationResult;
@@ -13,6 +12,8 @@ public class Documentation
     public DocumentationTitle DocumentationTitle { get; private set; }
 
     public DocumentationFormat DocumentationFormat { get; private set; }
+
+    public DocumentationContent DocumentationContent { get; private set; }
 
     private Documentation()
     {
@@ -57,6 +58,24 @@ public class Documentation
 
         // Update the format.
         DocumentationFormat = newFormat.Value;
+
+        return Result.Success();
+    }
+
+    public Result UpdateContent(string content)
+    {
+        var newContent = DocumentationContent.Create(content);
+
+        // ! VALIDATION
+        // Are there any specific things that we would like to validate, when the user updates the description?
+        if (newContent.IsFailure)
+        {
+            // ! Return the errors from the result.
+            return Result.Failure(newContent.Errors.ToArray());
+        }
+
+        // Update the format.
+        DocumentationContent = newContent.Value;
 
         return Result.Success();
     }

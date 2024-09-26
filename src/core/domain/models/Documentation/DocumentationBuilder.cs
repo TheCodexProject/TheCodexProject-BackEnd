@@ -26,6 +26,7 @@ public class DocumentationBuilder
         return new DocumentationBuilder()
             .WithTitle(DocumentationConstants.DefaultTitle)
             .WithFormat(DocumentationConstants.DefaultFormat)
+            .WithContent(DocumentationConstants.DefaultContent)
             .Build();
     }
 
@@ -44,6 +45,18 @@ public class DocumentationBuilder
     public DocumentationBuilder WithFormat(string format)
     {
         var result = _documentation.UpdateFormat(format);
+
+        if (result.IsFailure)
+        {
+            _errors.AddRange(result.Errors);
+        }
+
+        return this;
+    }
+
+    public DocumentationBuilder WithContent(string content)
+    {
+        var result = _documentation.UpdateContent(content);
 
         if (result.IsFailure)
         {
