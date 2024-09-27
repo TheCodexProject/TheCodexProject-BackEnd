@@ -63,11 +63,12 @@ namespace Unit.models.milestone
             var builder = MilestoneBuilder.Create();
 
             // Act
-            var result = builder.WithTitle("").Build();
+            var result = builder.WithTitle("")
+                .Build();
 
             // Assert
             Assert.True(result.IsFailure);
-            Assert.Contains(result.Errors, e => e is MilestoneTitleEmptyException);
+            Assert.Contains(result.Errors, e => e is RequiredFieldMissingException);
         }
 
         // Null Required Fields - Ensure the builder cannot build the milestone with null required fields (Title).
