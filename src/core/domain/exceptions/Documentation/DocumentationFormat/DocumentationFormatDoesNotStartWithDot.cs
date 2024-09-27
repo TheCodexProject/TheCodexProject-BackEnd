@@ -3,7 +3,7 @@
 namespace domain.exceptions.documentation.documentationFormat;
 
 /// <summary>
-/// Exception for when a Project is created without a title.
+/// Exception for when a Documentation format does not start with a dot.
 /// </summary>
 [Serializable]
 public class DocumentationFormatDoesNotStartWithDot : Exception

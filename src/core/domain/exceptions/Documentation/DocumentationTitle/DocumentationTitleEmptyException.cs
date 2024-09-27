@@ -3,7 +3,7 @@
 namespace domain.exceptions.documentation.documentationTitle;
 
 /// <summary>
-/// Exception for when a Project is created without a title.
+/// Exception for when a documentation is created without a title.
 /// </summary>
 [Serializable]
 public class DocumentationTitleEmptyException : Exception

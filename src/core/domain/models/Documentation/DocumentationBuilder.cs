@@ -66,37 +66,37 @@ public class DocumentationBuilder
         // ? Check if there are any ProjectTitleEmptyExceptions in the errors list.
         if (_errors.Any(e => e is DocumentationTitleEmptyException))
         {
-            // * Take out the WorkItemTitleEmptyException from errors and store it in a variable.
+            // * Take out the DocumentationTitleEmptyException from errors and store it in a variable.
             var error = _errors.First(e => e is DocumentationTitleEmptyException);
 
-            // * Remove the ProjectTitleEmptyException from the errors list.
+            // * Remove the DocumentationTitleEmptyException from the errors list.
             _errors.Remove(error);
 
-            // * Create a new RequiredFieldMissingException with the ProjectTitleEmptyExceptions as the inner exception.
+            // * Create a new RequiredFieldMissingException with the DocumentationTitleEmptyException as the inner exception.
             var requiredFieldMissingException = new RequiredFieldMissingException("Title is required.", error);
             _errors.Insert(0, requiredFieldMissingException);
         }
         else if (_errors.Any(e => e is DocumentationContentEmptyException))
         {
-            // * Take out the WorkItemTitleEmptyException from errors and store it in a variable.
+            // * Take out the DocumentationContentEmptyException from errors and store it in a variable.
             var error = _errors.First(e => e is DocumentationContentEmptyException);
 
-            // * Remove the ProjectTitleEmptyException from the errors list.
+            // * Remove the DocumentationContentEmptyException from the errors list.
             _errors.Remove(error);
 
-            // * Create a new RequiredFieldMissingException with the ProjectTitleEmptyExceptions as the inner exception.
+            // * Create a new RequiredFieldMissingException with the DocumentationContentEmptyException as the inner exception.
             var requiredFieldMissingException = new RequiredFieldMissingException("Content is required.", error);
             _errors.Insert(0, requiredFieldMissingException);
         }
         else if (_errors.Any(e => e is DocumentationFormatEmptyException))
         {
-            // * Take out the WorkItemTitleEmptyException from errors and store it in a variable.
+            // * Take out the DocumentationFormatEmptyException from errors and store it in a variable.
             var error = _errors.First(e => e is DocumentationFormatEmptyException);
 
-            // * Remove the ProjectTitleEmptyException from the errors list.
+            // * Remove the DocumentationFormatEmptyException from the errors list.
             _errors.Remove(error);
 
-            // * Create a new RequiredFieldMissingException with the ProjectTitleEmptyExceptions as the inner exception.
+            // * Create a new RequiredFieldMissingException with the DocumentationFormatEmptyException as the inner exception.
             var requiredFieldMissingException = new RequiredFieldMissingException("Content is required.", error);
             _errors.Insert(0, requiredFieldMissingException);
         }

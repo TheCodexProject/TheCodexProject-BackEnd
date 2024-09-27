@@ -7,7 +7,7 @@ namespace domain.models.documentation;
 
 public class Documentation
 {
-    public Id<Documentation> Id { get; set; }
+    public Id<Documentation> Id { get; private set; }
 
     public DocumentationTitle Title { get; private set; }
 
