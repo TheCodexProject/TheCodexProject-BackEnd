@@ -74,6 +74,8 @@ public class WorkItem
     {
         // "Specific" values
         Id = Id<WorkItem>.Create();
+        SubItems = new List<WorkItem>();
+        Dependencies = new List<Id<WorkItem>>();
     }
     
     /// <summary>

@@ -33,6 +33,8 @@ public class WorkItemBuilderTests
             .WithStatus(WorkItemStatus.NotStarted)
             .WithPriority(WorkItemPriority.Low)
             .WithType(WorkItemType.Task)
+            .WithSubItems(WorkItemConstants.DefaultWorkItems)
+            .WithDependencies(WorkItemConstants.DefaultWorkItems)
             .Build();
         
         // Assert

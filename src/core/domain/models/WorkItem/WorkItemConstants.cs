@@ -28,4 +28,11 @@ public static class WorkItemConstants
     /// A default type to be used for testing purposes.
     /// </summary>
     public const WorkItemType Type = WorkItemType.Task;
+    
+    public static List<WorkItem> DefaultWorkItems => new List<WorkItem>
+    { 
+        WorkItem.Create(),
+        WorkItem.Create(),
+        WorkItem.Create()
+    };
 }

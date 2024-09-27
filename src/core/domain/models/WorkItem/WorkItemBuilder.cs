@@ -31,6 +31,8 @@ public class WorkItemBuilder : IBuilder<WorkItem>
             .WithStatus(WorkItemConstants.Status)
             .WithPriority(WorkItemConstants.Priority)
             .WithType(WorkItemConstants.Type)
+            .WithSubItems(WorkItemConstants.DefaultWorkItems)
+            .WithDependencies(WorkItemConstants.DefaultWorkItems)
             .Build();
     }
     
@@ -153,6 +155,46 @@ public class WorkItemBuilder : IBuilder<WorkItem>
         return this;
     }
     
+    /// <summary>
+    /// Adds a list of sub items to the work item.
+    /// </summary>
+    /// <param name="subItems">Sub-Items to be set.</param>
+    /// <returns></returns>
+    public WorkItemBuilder WithSubItems(List<WorkItem> subItems)
+    {
+        foreach (var subItem in subItems)
+        {
+            var result = _workItem.AddSubItem(subItem);
+        
+            if (result.IsFailure)
+            {
+                _errors.AddRange(result.Errors);
+            }
+        }
+        
+        return this;
+    }
+    
+    /// <summary>
+    /// Adds a list of dependencies to the work item.
+    /// </summary>
+    /// <param name="dependencies">Dependencies to be set.</param>
+    /// <returns></returns>
+    public WorkItemBuilder WithDependencies(List<WorkItem> dependencies)
+    {
+        foreach (var dependency in dependencies)
+        {
+            var result = _workItem.AddDependency(dependency.Id);
+        
+            if (result.IsFailure)
+            {
+                _errors.AddRange(result.Errors);
+            }
+        }
+        
+        return this;
+    }
+    
     public Result<WorkItem> Build()
     {
         // ? Check if there are any WorkItemTitleEmptyExceptions in the errors list.
@@ -179,6 +221,4 @@ public class WorkItemBuilder : IBuilder<WorkItem>
         // ? Check if there are any errors in the errors list.
         return _errors.Any() ? Result<WorkItem>.Failure(_errors.ToArray()) : _workItem;
     }
-
-    
 }
