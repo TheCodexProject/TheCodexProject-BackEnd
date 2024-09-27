@@ -11,7 +11,7 @@ public class DocumentationFormatEmptyException : Exception
     /// <summary>
     /// The default message.
     /// </summary>
-    public DocumentationFormatEmptyException() : base("Format cannot be empty, it must be between 1 and 5 characters.") { }
+    public DocumentationFormatEmptyException() : base("Format cannot be empty, it must be between 2 and 10 characters, including the dot.") { }
 
     /// <summary>
     /// Used for custom messages.

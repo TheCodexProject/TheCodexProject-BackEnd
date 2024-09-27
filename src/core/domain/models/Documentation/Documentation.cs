@@ -9,11 +9,11 @@ public class Documentation
 {
     public Id<Documentation> Id { get; set; }
 
-    public DocumentationTitle DocumentationTitle { get; private set; }
+    public DocumentationTitle Title { get; private set; }
 
-    public DocumentationFormat DocumentationFormat { get; private set; }
+    public DocumentationFormat Format { get; private set; }
 
-    public DocumentationContent DocumentationContent { get; private set; }
+    public DocumentationContent Content { get; private set; }
 
     private Documentation()
     {
@@ -39,7 +39,7 @@ public class Documentation
         }
 
         // Update the title.
-        DocumentationTitle = newTitle.Value;
+        Title = newTitle.Value;
 
         return Result.Success();
     }
@@ -57,7 +57,7 @@ public class Documentation
         }
 
         // Update the format.
-        DocumentationFormat = newFormat.Value;
+        Format = newFormat.Value;
 
         return Result.Success();
     }
@@ -75,7 +75,7 @@ public class Documentation
         }
 
         // Update the format.
-        DocumentationContent = newContent.Value;
+        Content = newContent.Value;
 
         return Result.Success();
     }

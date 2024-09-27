@@ -22,9 +22,9 @@ namespace Unit.values.documentation
 
             // Assert
             Assert.True(documentation.IsSuccess);
-            Assert.Equal(DocumentationConstants.DefaultTitle, documentation.Value.DocumentationTitle);
-            Assert.Equal(DocumentationConstants.DefaultFormat, documentation.Value.DocumentationFormat);
-            Assert.Equal(DocumentationConstants.DefaultContent, documentation.Value.DocumentationContent);
+            Assert.Equal(DocumentationConstants.DefaultTitle, documentation.Value.Title);
+            Assert.Equal(DocumentationConstants.DefaultFormat, documentation.Value.Format);
+            Assert.Equal(DocumentationConstants.DefaultContent, documentation.Value.Content);
         }
 
         /// <summary>
@@ -92,12 +92,14 @@ namespace Unit.values.documentation
 
             // Act
             var result = builder
+                .WithTitle(DocumentationConstants.DefaultTitle)
                 .WithFormat("")
+                .WithContent(DocumentationConstants.DefaultContent)
                 .Build();
 
             // Assert
             Assert.True(result.IsFailure);
-            Assert.Contains(result.Errors, e => e is DocumentationFormatEmptyException);
+            Assert.Contains(result.Errors, e => e is RequiredFieldMissingException);
         }
 
         /// <summary>
@@ -111,7 +113,9 @@ namespace Unit.values.documentation
 
             // Act
             var documentation = DocumentationBuilder.Create()
+                .WithTitle(DocumentationConstants.DefaultTitle)
                 .WithFormat(formatWithoutDot)
+                .WithContent(DocumentationConstants.DefaultContent)
                 .Build();
 
             // Assert
@@ -126,11 +130,13 @@ namespace Unit.values.documentation
         public void Create_Documentation_With_Too_Long_Format_Should_Fail()
         {
             // Arrange
-            var longFormat = "abcdef"; // Assuming format length should not exceed 5 characters
+            var longFormat = "ABCDEFGHIJKLM"; // Assuming format length should not exceed 5 characters
 
             // Act
             var documentation = DocumentationBuilder.Create()
+                .WithTitle(DocumentationConstants.DefaultTitle)
                 .WithFormat(longFormat)
+                .WithContent(DocumentationConstants.DefaultContent)
                 .Build();
 
             // Assert
@@ -142,16 +148,16 @@ namespace Unit.values.documentation
         /// Test to see that creating Documentation with valid title and format succeeds.
         /// </summary>
         [Fact]
-        public void Create_Documentation_With_Valid_Title_And_Invalid_Format_Should_Fail()
+        public void Create_Documentation_With_Valid_Title_And_Valid_Content_And_Invalid_Format_Should_Fail()
         {
             // Arrange
-            var validTitle = "Valid Title";
-            var validFormat = "docx.";
+            var invalidFormat = "docx.";
 
             // Act
             var documentation = DocumentationBuilder.Create()
-                .WithTitle(validTitle)
-                .WithFormat(validFormat)
+                .WithTitle(DocumentationConstants.DefaultTitle)
+                .WithFormat(invalidFormat)
+                .WithContent(DocumentationConstants.DefaultContent)
                 .Build();
 
             // Assert
@@ -163,22 +169,24 @@ namespace Unit.values.documentation
         /// Test to see that creating Documentation with valid title and format succeeds.
         /// </summary>
         [Fact]
-        public void Create_Documentation_With_Valid_Title_And_Format_Should_Succeed()
+        public void Create_Documentation_With_Valid_Title_And_Format_And_Content_Should_Succeed()
         {
             // Arrange
             var validTitle = "Valid Title";
             var validFormat = ".docx";
+            var validContent = "Valid Content";
 
             // Act
             var documentation = DocumentationBuilder.Create()
                 .WithTitle(validTitle)
                 .WithFormat(validFormat)
+                .WithContent(validContent)
                 .Build();
 
             // Assert
             Assert.True(documentation.IsSuccess);
-            Assert.Equal(validTitle, documentation.Value.DocumentationTitle);
-            Assert.Equal(validFormat, documentation.Value.DocumentationFormat);
+            Assert.Equal(validTitle, documentation.Value.Title);
+            Assert.Equal(validFormat, documentation.Value.Format);
         }
 
         /// <summary>

@@ -71,6 +71,8 @@ namespace Unit.values.documentation
             // Assert
             Assert.True(result.IsFailure);
             Assert.Contains(result.Errors, e => e is DocumentationFormatTooShortException);
+            Assert.Contains(result.Errors, e => e is DocumentationFormatDoesNotStartWithDot);
+            Assert.Contains(result.Errors, e => e is DocumentationFormatDoesNotFollowConventionException);
         }
 
         /// <summary>
@@ -80,7 +82,7 @@ namespace Unit.values.documentation
         public void Format_Cannot_Be_Too_Long_Is_Failure()
         {
             // Arrange
-            var format = new string('a', 6);
+            var format = new string('a', 10);
 
             // Act
             var result = DocumentationFormat.Create(format);
@@ -96,7 +98,7 @@ namespace Unit.values.documentation
         public void Format_Cannot_Be_Too_Long_Exception_Check()
         {
             // Arrange
-            var format = new string('a', 6);
+            var format = new string('a', 11);
 
             // Act
             var result = DocumentationFormat.Create(format);
@@ -104,6 +106,8 @@ namespace Unit.values.documentation
             // Assert
             Assert.True(result.IsFailure);
             Assert.Contains(result.Errors, e => e is DocumentationFormatTooLongException);
+            Assert.Contains(result.Errors, e => e is DocumentationFormatDoesNotStartWithDot);
+            Assert.Contains(result.Errors, e => e is DocumentationFormatDoesNotFollowConventionException);
         }
 
         /// <summary>
@@ -136,6 +140,7 @@ namespace Unit.values.documentation
 
             // Assert
             Assert.True(result.IsFailure);
+            Assert.Contains(result.Errors, e => e is DocumentationFormatDoesNotStartWithDot);
             Assert.Contains(result.Errors, e => e is DocumentationFormatDoesNotFollowConventionException);
         }
 

@@ -41,7 +41,7 @@ public class DocumentationFormat
     }
 
     /// <summary>
-    /// Validates the documentation format.
+    /// Validates the documentation format. Note that the dot is included in this legth calculation 
     /// </summary>
     /// <param name="value">Format to be validated.</param>
     /// <returns> A <see cref="Result"/> indicating if the validation was a success or not.</returns>
@@ -55,21 +55,17 @@ public class DocumentationFormat
             return Result.Failure(errors.ToArray());
         }
 
-        switch (value)
-        {
-            case { Length: > 5 }:
-                errors.Add(new DocumentationFormatTooLongException());
-                break;
-            case { Length: < 2 }:
-                errors.Add(new DocumentationFormatTooShortException());
-                break;
-            case string v when !v.Contains("."):
-                errors.Add(new DocumentationFormatDoesNotFollowConventionException());
-                break;
-            case string v when v[0] != '.':
-                errors.Add(new DocumentationFormatDoesNotStartWithDot());
-                break;
-        }
+        if (value.Length > 10)
+            errors.Add(new DocumentationFormatTooLongException());
+
+        if (value.Length < 2)
+            errors.Add(new DocumentationFormatTooShortException());
+
+        if (!value.Contains("."))
+            errors.Add(new DocumentationFormatDoesNotFollowConventionException());
+
+        if (value[0] != '.')
+            errors.Add(new DocumentationFormatDoesNotStartWithDot());
 
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success();
     }

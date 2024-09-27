@@ -1,15 +1,8 @@
-﻿using domain.exceptions.project.ProjectTitle;
-using domain.exceptions;
-using domain.models.documentation;
-using domain.models.project;
+﻿using domain.exceptions;
 using OperationResult;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using domain.exceptions.documentation.documentationContent;
 using domain.exceptions.documentation.documentationTitle;
+using domain.exceptions.documentation.documentationFormat;
 
 namespace domain.models.documentation;
 
@@ -94,6 +87,33 @@ public class DocumentationBuilder
             // * Create a new RequiredFieldMissingException with the ProjectTitleEmptyExceptions as the inner exception.
             var requiredFieldMissingException = new RequiredFieldMissingException("Content is required.", error);
             _errors.Insert(0, requiredFieldMissingException);
+        }
+        else if (_errors.Any(e => e is DocumentationFormatEmptyException))
+        {
+            // * Take out the WorkItemTitleEmptyException from errors and store it in a variable.
+            var error = _errors.First(e => e is DocumentationFormatEmptyException);
+
+            // * Remove the ProjectTitleEmptyException from the errors list.
+            _errors.Remove(error);
+
+            // * Create a new RequiredFieldMissingException with the ProjectTitleEmptyExceptions as the inner exception.
+            var requiredFieldMissingException = new RequiredFieldMissingException("Content is required.", error);
+            _errors.Insert(0, requiredFieldMissingException);
+        }
+        else
+        {
+            if (_documentation.Title == null)
+            {
+                _errors.Add(new RequiredFieldMissingException("Title is required.", new DocumentationTitleEmptyException()));
+            }
+            if (_documentation.Content == null)
+            {
+                _errors.Add(new RequiredFieldMissingException("Title is required.", new DocumentationContentEmptyException()));
+            }
+            if (_documentation.Format == null)
+            {
+                _errors.Add(new RequiredFieldMissingException("Title is required.", new DocumentationFormatEmptyException()));
+            }
         }
 
         return _errors.Any() ? Result<Documentation>.Failure(_errors.ToArray()) : _documentation;
