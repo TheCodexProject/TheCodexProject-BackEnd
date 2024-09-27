@@ -98,8 +98,10 @@ public class Workspace
         return Result.Success();
     }
     
-    // TODO: Make a method that allows for the owner to be updated.
-    // public Result SetOwner(IOwnership owner) ?
-    // Public Result TransferOwnership(IOwnership newOwner) ?
+    public Result UpdateOwner(IOwnership owner)
+    {
+        Owner = owner;
+        return Result.Success();
+    }
 }
 
