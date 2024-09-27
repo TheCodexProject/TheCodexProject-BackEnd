@@ -1,5 +1,4 @@
 ﻿using domain.exceptions.board.boardTitle;
-using domain.exceptions.board.boardQuery;
 using domain.exceptions;
 using domain.models.board;
 
@@ -35,7 +34,6 @@ public class BoardBuilderTests
         // Act
         var result = builder
             .WithTitle(BoardConstants.DefaultTitle)
-            .WithQuery(BoardConstants.DefaultQuery())
             .Build();
 
         // Assert
@@ -56,6 +54,7 @@ public class BoardBuilderTests
 
         // Assert
         Assert.True(result.IsFailure);
+        Assert.Contains(result.Errors, e => e is RequiredFieldMissingException);
     }
 
     /// <summary>
@@ -68,13 +67,12 @@ public class BoardBuilderTests
         var builder = BoardBuilder.Create();
 
         // Act
-        var result = builder.WithTitle("").WithQuery(BoardConstants.DefaultQuery()).Build();
+        var result = builder.WithTitle("").Build();
 
         // Assert
         Assert.True(result.IsFailure);
         Assert.Contains(result.Errors, e => e is RequiredFieldMissingException);
     }
-
 
     /// <summary>
     /// Test to ensure that the builder fails when a null title is provided.
@@ -86,23 +84,7 @@ public class BoardBuilderTests
         var builder = BoardBuilder.Create();
 
         // Act
-        var result = builder.WithTitle(null).WithQuery(BoardConstants.DefaultQuery()).Build();
-
-        // Assert
-        Assert.True(result.IsFailure);
-    }
-
-    /// <summary>
-    /// Test to ensure that the builder fails when no query is provided.
-    /// </summary>
-    [Fact]
-    public void BoardBuilder_Builds_With_No_Query_Fails()
-    {
-        // Arrange
-        var builder = BoardBuilder.Create();
-
-        // Act
-        var result = builder.WithTitle("Test Board").Build();  // No query provided
+        var result = builder.WithTitle(null).Build();
 
         // Assert
         Assert.True(result.IsFailure);
@@ -119,7 +101,7 @@ public class BoardBuilderTests
         var builder = BoardBuilder.Create();
 
         // Act
-        var result = builder.WithTitle("").WithQuery(BoardConstants.DefaultQuery()).Build(); // Empty title triggers BoardTitleEmptyException
+        var result = builder.WithTitle("").Build(); // Empty title triggers BoardTitleEmptyException
 
         // Assert
         Assert.True(result.IsFailure);
@@ -132,30 +114,5 @@ public class BoardBuilderTests
         var requiredFieldMissingException = result.Errors.OfType<RequiredFieldMissingException>().FirstOrDefault();
         Assert.NotNull(requiredFieldMissingException);
         Assert.IsType<BoardTitleEmptyException>(requiredFieldMissingException.InnerException);
-    }
-
-    /// <summary>
-    /// Test to check if BoardQueryNullException is replaced by RequiredFieldMissingException in the build process.
-    /// </summary>
-    [Fact]
-    public void BoardBuilder_Changes_BoardQueryNullException_To_RequiredFieldMissingException()
-    {
-        // Arrange
-        var builder = BoardBuilder.Create();
-
-        // Act
-        var result = builder.WithTitle(BoardConstants.DefaultTitle).Build();  // No query provided, triggering BoardQueryNullException
-
-        // Assert
-        Assert.True(result.IsFailure);
-
-        // Ensure that the error list contains RequiredFieldMissingException instead of BoardQueryNullException
-        Assert.Contains(result.Errors, e => e is RequiredFieldMissingException);
-        Assert.DoesNotContain(result.Errors, e => e is BoardQueryNullException);
-
-        // Check if the inner exception of RequiredFieldMissingException is BoardQueryNullException
-        var requiredFieldMissingException = result.Errors.OfType<RequiredFieldMissingException>().FirstOrDefault();
-        Assert.NotNull(requiredFieldMissingException);
-        Assert.IsType<BoardQueryNullException>(requiredFieldMissingException.InnerException);
     }
 }

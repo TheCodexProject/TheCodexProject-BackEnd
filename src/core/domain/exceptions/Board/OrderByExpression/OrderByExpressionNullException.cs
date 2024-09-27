@@ -1,35 +1,35 @@
 ﻿using System.Runtime.Serialization;
 
-namespace domain.exceptions.board.boardQuery;
+namespace domain.exceptions.board.orderByExpression;
 
 /// <summary>
-/// Exception for when a Board is created without a BoardQuery.
+/// Exception for when a OrderByExpression is created with null as input.
 /// </summary>
 [Serializable]
-public class BoardQueryNullException : Exception
+public class OrderByExpressionNullException : Exception
 {
     /// <summary>
     /// The default message.
     /// </summary>
-    public BoardQueryNullException() : base("BoardQuery cannot be null") { }
+    public OrderByExpressionNullException() : base("OrderByExpression cannot be null") { }
 
     /// <summary>
     /// Used for custom messages.
     /// </summary>
     /// <param name="message">Customized message.</param>
-    public BoardQueryNullException(string message) : base(message) { }
+    public OrderByExpressionNullException(string message) : base(message) { }
 
     /// <summary>
     /// Used for inner exceptions (Like when an exception is thrown inside another exception)
     /// </summary>
     /// <param name="message">Customized message.</param>
     /// <param name="innerException">Inner exception.</param>
-    public BoardQueryNullException(string message, Exception innerException) : base(message, innerException) { }
+    public OrderByExpressionNullException(string message, Exception innerException) : base(message, innerException) { }
 
     /// <summary>
     /// Used for serialization.
     /// </summary>
     /// <param name="info"></param>
     /// <param name="context"></param>
-    protected BoardQueryNullException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    protected OrderByExpressionNullException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

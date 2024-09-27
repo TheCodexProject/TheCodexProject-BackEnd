@@ -2,90 +2,167 @@
 using domain.models.shared;
 using domain.models.workItem;
 using OperationResult;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
-namespace domain.models.board
+namespace domain.models.board;
+
+public class Board
 {
-    public class Board
+    /// <summary>
+    /// The unique identifier for the Board.
+    /// </summary>
+    public Id<Board> Id { get; private set; }
+
+    /// <summary>
+    /// Holds the title of the Board.
+    /// </summary>
+    public BoardTitle? Title { get; private set; }
+
+    /// <summary>
+    /// Holds a private list of filter expressions used to filter WorkItems.
+    /// </summary>
+    private readonly List<FilterExpression> _filters = new List<FilterExpression>();
+
+    /// <summary>
+    /// Holds a private list of order-by expressions used to sort WorkItems.
+    /// </summary>
+    private readonly List<OrderByExpression> _orderByExpressions = new List<OrderByExpression>();
+
+    /// <summary>
+    /// Exposes a read-only view of filter expressions.
+    /// </summary>
+    public IEnumerable<FilterExpression> Filters => _filters.AsReadOnly();
+
+    /// <summary>
+    /// Exposes a read-only view of order-by expressions.
+    /// </summary>
+    public IEnumerable<OrderByExpression> OrderByExpressions => _orderByExpressions.AsReadOnly();
+
+    /// <summary>
+    /// Creates a new instance of <see cref="Board"/> with default values.
+    /// </summary>
+    private Board()
     {
-        /// <summary>
-        /// The unique identifier for the Board.
-        /// </summary>
-        public Id<Board> Id { get; private set; }
+        Id = Id<Board>.Create();
+    }
 
-        /// <summary>
-        /// Holds the title of the Board.
-        /// </summary>
-        public BoardTitle? Title { get; private set; }
+    /// <summary>
+    /// Creates a new instance of <see cref="Board"/> with default values.
+    /// </summary>
+    /// <returns>A <see cref="Board"/></returns>
+    public static Board Create()
+    {
+        return new Board();
+    }
 
-        /// <summary>
-        /// Holds the board query, which is an IQueryable query for WorkItems.
-        /// </summary>
-        public BoardQuery? Query { get; private set; }
+    /// <summary>
+    /// Updates the title of the Board.
+    /// </summary>
+    /// <param name="title">The new title.</param>
+    /// <returns>A <see cref="Result"/> indicating if the update was a success.</returns>
+    public Result UpdateTitle(string title)
+    {
+        var newTitle = BoardTitle.Create(title);
 
-        /// <summary>
-        /// Creates a new instance of <see cref="Board"/> with default values.
-        /// </summary>
-        private Board()
+        if (newTitle.IsFailure)
         {
-            Id = Id<Board>.Create();
+            // Return the errors from the result.
+            return Result.Failure(newTitle.Errors.ToArray());
         }
 
-        /// <summary>
-        /// Creates a new instance of <see cref="Board"/> with default values.
-        /// </summary>
-        /// <returns>A <see cref="Board"/></returns>
-        public static Board Create()
+        // Update the title.
+        Title = newTitle.Value;
+
+        return Result.Success();
+    }
+
+    #region Filter Methods
+
+    /// <summary>
+    /// Adds a filter expression to the board.
+    /// </summary>
+    /// <param name="filterExpression">The filter expression to add.</param>
+    public Result AddFilter(Expression<Func<WorkItem, bool>> filterExpression)
+    {
+        var result = FilterExpression.Create(filterExpression);
+
+        if (result.IsFailure)
         {
-            return new Board();
+            return Result.Failure(result.Errors.ToArray());
         }
 
-        /// <summary>
-        /// Updates the title of the Board.
-        /// </summary>
-        /// <param name="title">The new title.</param>
-        /// <returns>A <see cref="Result"/> indicating if the update was a success.</returns>
-        public Result UpdateTitle(string title)
+        _filters.Add(result.Value);
+        return Result.Success();
+    }
+
+    /// <summary>
+    /// Removes a filter expression from the board.
+    /// </summary>
+    /// <param name="filterExpression">The filter expression to remove.</param>
+    public Result RemoveFilter(FilterExpression filterExpression)
+    {
+        var existingFilter = _filters.FirstOrDefault(f => f.Equals(filterExpression));
+
+        if (existingFilter == null)
         {
-            var newTitle = BoardTitle.Create(title);
-
-            if (newTitle.IsFailure)
-            {
-                // Return the errors from the result.
-                return Result.Failure(newTitle.Errors.ToArray());
-            }
-
-            // Update the title.
-            Title = newTitle.Value;
-
-            return Result.Success();
+            // Filter not found, return failure.
+            return Result.Failure();
         }
 
-        /// <summary>
-        /// Sets the query for the board using an IQueryable of WorkItems.
-        /// This query can be used with Entity Framework Core.
-        /// </summary>
-        /// <param name="query">The query to be set.</param>
-        public Result UpdateQuery(IQueryable<WorkItem> query)
+        _filters.Remove(existingFilter);
+        return Result.Success();
+    }
+
+    #endregion
+
+    #region OrderBy Methods
+
+    /// <summary>
+    /// Adds an order-by expression to the board.
+    /// </summary>
+    /// <param name="orderByExpression">The order-by expression to add.</param>
+    public Result AddOrderBy(Expression<Func<WorkItem, object>> orderByExpression)
+    {
+        var result = OrderByExpression.Create(orderByExpression);
+
+        if (result.IsFailure)
         {
-            var result = BoardQuery.Create(query);
-
-            if (result.IsFailure)
-            {
-                return Result.Failure(result.Errors.ToArray());
-            }
-
-            Query = result.Value;
-            return Result.Success();
+            return Result.Failure(result.Errors.ToArray());
         }
 
-        /// <summary>
-        /// Executes the query stored in the board and returns the list of filtered WorkItems.
-        /// </summary>
-        /// <returns>A IEnumerable of WorkItems.</returns>
-        public IEnumerable<WorkItem> ExecuteQuery()
+        _orderByExpressions.Add(result.Value);
+        return Result.Success();
+    }
+
+    /// <summary>
+    /// Removes an order-by expression from the board.
+    /// </summary>
+    /// <param name="orderByExpression">The order-by expression to remove.</param>
+    public Result RemoveOrderBy(OrderByExpression orderByExpression)
+    {
+        var existingOrderBy = _orderByExpressions.FirstOrDefault(o => o.Equals(orderByExpression));
+
+        if (existingOrderBy == null)
         {
-            return Query.Execute();
+            // OrderBy expression not found, return failure.
+            return Result.Failure();
         }
+
+        _orderByExpressions.Remove(existingOrderBy);
+        return Result.Success();
+    }
+
+    #endregion
+
+    /// <summary>
+    /// Stores the filter and order-by expressions for later execution, but does not execute them.
+    /// </summary>
+    /// <returns>A tuple containing the stored filter and order-by expressions.</returns>
+    public (IEnumerable<FilterExpression> filters, IEnumerable<OrderByExpression> orderByExpressions) GetExpressions()
+    {
+        return (Filters, OrderByExpressions);
     }
 }
