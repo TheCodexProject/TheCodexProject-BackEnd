@@ -64,7 +64,7 @@ public class WorkItem
     /// <summary>
     /// A list of tasks needed to be completed before the WorkItem can be started.
     /// </summary>
-    public List<WorkItem> Dependencies { get; private set; }
+    public List<Id<WorkItem>> Dependencies { get; private set; }
     
     
     /// <summary>
@@ -231,7 +231,7 @@ public class WorkItem
         return Result.Success();
     }
     
-    public Result AddDependency(WorkItem item)
+    public Result AddDependency(Id<WorkItem> item)
     {
         // ! VALIDATION
         // Are there any specific things that we would like to validate, when the user adds a dependency?
@@ -253,7 +253,7 @@ public class WorkItem
         return Result.Success();
     }
     
-    public Result RemoveDependency(WorkItem item)
+    public Result RemoveDependency(Id<WorkItem> item)
     {
         // ! VALIDATION
         // Are there any specific things that we would like to validate, when the user removes a dependency?
