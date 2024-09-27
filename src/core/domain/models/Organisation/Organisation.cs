@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+using domain.exceptions.Organisation;
 using domain.models.Interfaces;
 using domain.models.organisation.values;
 using domain.models.shared;
@@ -7,11 +9,26 @@ namespace domain.models.organisation;
 
 public class Organisation : IOwnership
 {
-    public Id<Organisation> Id { get; }
+    /// <summary>
+    /// The unique identifier of the organisation.
+    /// </summary>
+    public Id<Organisation> Id { get; private set; }
     
+    /// <summary>
+    /// The name of the organisation.
+    /// </summary>
     public OrganisationName? Name { get; private set; }
 
-    public List<IOwnership>? Owners { get; }
+    /// <summary>
+    /// A list of the owners of the organisation.
+    /// </summary>
+    private List<IOwnership> _owners { get;  set; }
+    
+    /// <summary>
+    /// Returns a read-only collection of the owners of the organisation.
+    /// </summary>
+    public ReadOnlyCollection<IOwnership> Owners => _owners.AsReadOnly();
+    
     
     // TODO: Add the following property after merge.
     // public IEnumerable<Documentation> Docs { get; }
@@ -19,7 +36,7 @@ public class Organisation : IOwnership
     private Organisation()
     {
         Id = Id<Organisation>.Create();
-        Owners = new List<IOwnership>();
+        _owners = new List<IOwnership>();
     }
     
     public static Organisation Create()
@@ -40,13 +57,31 @@ public class Organisation : IOwnership
         
         return Result.Success();
     }
-
- 
-    // Should this even be a method? or just a part of the constructor?
+    
     public Result AddOwner(IOwnership owner)
     {
         // What validation should be done here, if any?
-        Owners?.Add(owner);
+        _owners?.Add(owner);
+        
+        return Result.Success();
+    }
+    
+    public Result RemoveOwner(IOwnership owner)
+    {
+        // There needs to be at least one owner at all times for an organisation to exist.
+        if (_owners.Count() == 1)
+        {
+                return Result.Failure(new OrganisationNeedsAnOwnerException());
+        }
+        
+        // ? Check if the Owner is in the list?
+        if(!_owners.Contains(owner))
+        {
+            return Result.Failure(new OrganisationOwnerNotFoundException());
+        }
+        
+        // Remove the owner.
+        _owners.Remove(owner);
         
         return Result.Success();
     }

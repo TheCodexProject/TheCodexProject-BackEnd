@@ -82,16 +82,16 @@ public class OrganisationBuilder : IBuilder<Organisation>
     /// <returns></returns>
     public Result<Organisation> Build()
     {
-        // ? Check if there are any WorkItemTitleEmptyExceptions in the errors list.
+        // ? Check if there are any OrganisationNameEmptyException in the errors list.
         if (_errors.Any(e => e is OrganisationNameEmptyException))
         {
             // * Take out the WorkItemTitleEmptyException from errors and store it in a variable.
             var error = _errors.First(e => e is OrganisationNameEmptyException);
             
-            // * Remove the WorkItemTitleEmptyException from the errors list.
+            // * Remove the OrganisationNameEmptyException from the errors list.
             _errors.Remove(error);
             
-            // * Create a new RequiredFieldMissingException with the WorkItemTitleEmptyException as the inner exception.
+            // * Create a new RequiredFieldMissingException with the OrganisationNameEmptyException as the inner exception.
             var requiredFieldMissingException = new RequiredFieldMissingException("Name is required. 1",error);
             _errors.Insert(0,requiredFieldMissingException);
         }

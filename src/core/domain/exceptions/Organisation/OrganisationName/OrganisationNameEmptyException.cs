@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace domain.exceptions.Organisation;
 
 /// <summary>
-/// Exception for when a WorkItem is created without a title.
+/// Exception for when an Organisation is created without a title.
 /// </summary>
 [Serializable]
 public class OrganisationNameEmptyException : Exception
