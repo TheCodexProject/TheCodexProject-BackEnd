@@ -1,4 +1,5 @@
-using System.Dynamic;
+using System.Collections.ObjectModel;
+using domain.exceptions.WorkItem;
 using domain.models.shared;
 using domain.models.user;
 using domain.models.workItem.values;
@@ -59,13 +60,22 @@ public class WorkItem
     /// <summary>
     /// A list of sub items that are related to the WorkItem.
     /// </summary>
-    public List<WorkItem> SubItems { get; private set; }
+    private List<WorkItem> _subItems { get; set; }
+    
+    /// <summary>
+    /// Returns a read-only list of the sub items.
+    /// </summary>
+    public ReadOnlyCollection<WorkItem> SubItems => _subItems.AsReadOnly();
     
     /// <summary>
     /// A list of tasks needed to be completed before the WorkItem can be started.
     /// </summary>
-    public List<Id<WorkItem>> Dependencies { get; private set; }
+    private List<Id<WorkItem>> _dependencies { get; set; }
     
+    /// <summary>
+    /// Returns a read-only list of the dependencies.
+    /// </summary>
+    public ReadOnlyCollection<Id<WorkItem>> Dependencies => _dependencies.AsReadOnly();
     
     /// <summary>
     /// Constructs a new instance of <see cref="WorkItem"/> with a set of default values.
@@ -74,8 +84,8 @@ public class WorkItem
     {
         // "Specific" values
         Id = Id<WorkItem>.Create();
-        SubItems = new List<WorkItem>();
-        Dependencies = new List<Id<WorkItem>>();
+        _subItems = new List<WorkItem>();
+        _dependencies = new List<Id<WorkItem>>();
     }
     
     /// <summary>
@@ -228,7 +238,7 @@ public class WorkItem
         // Are there any specific things that we would like to validate, when the user adds a sub item?
         
         // Add the sub item.
-        SubItems.Add(item);
+        _subItems.Add(item);
         
         return Result.Success();
     }
@@ -239,7 +249,7 @@ public class WorkItem
         // Are there any specific things that we would like to validate, when the user adds a dependency?
         
         // Add the dependency.
-        Dependencies.Add(item);
+        _dependencies.Add(item);
         
         return Result.Success();
     }
@@ -247,10 +257,16 @@ public class WorkItem
     public Result RemoveSubItem(WorkItem item)
     {
         // ! VALIDATION
-        // Are there any specific things that we would like to validate, when the user removes a sub item?
+                
+        // ? Look if the item exists in the list.
+        if (!_subItems.Contains(item))
+        {
+            ///
+            return Result.Failure(new SubItemNotFoundException());
+        }
         
         // Remove the sub item.
-        SubItems.Remove(item);
+        _subItems.Remove(item);
         
         return Result.Success();
     }
@@ -260,8 +276,14 @@ public class WorkItem
         // ! VALIDATION
         // Are there any specific things that we would like to validate, when the user removes a dependency?
         
+        // ? Look if the item exists in the list.
+        if (!_dependencies.Contains(item))
+        {
+            return Result.Failure(new DependencyNotFoundException());
+        }
+        
         // Remove the dependency.
-        Dependencies.Remove(item);
+        _dependencies.Remove(item);
         
         return Result.Success();
     }
