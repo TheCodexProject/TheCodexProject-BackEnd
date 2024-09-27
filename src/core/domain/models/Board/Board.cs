@@ -21,7 +21,7 @@ namespace domain.models.board
         /// <summary>
         /// Holds the board query, which is an IQueryable query for WorkItems.
         /// </summary>
-        public BoardQuery Query { get; private set; }
+        public BoardQuery? Query { get; private set; }
 
         /// <summary>
         /// Creates a new instance of <see cref="Board"/> with default values.
