@@ -1,4 +1,5 @@
-﻿using domain.models.milestone.values;
+﻿using domain.exceptions.milestone;
+using domain.models.milestone.values;
 using domain.models.shared;
 using domain.models.workItem;
 using OperationResult;
@@ -57,13 +58,15 @@ public class Milestone
     /// Adds a workitem to the list of workitems.
     /// </summary>
     /// <param name="workItem">The workitem to add.</param>
-    public void AddWorkItem(WorkItem workItem)
+    public Result AddWorkItem(WorkItem workItem)
     {
         if (workItem == null)
         {
-            throw new ArgumentNullException(nameof(workItem));
+            return Result.Failure(new MilestoneWorkItemErrorException());
         }
         _workItems.Add(workItem.Id);
+
+        return Result.Success();
     }
 
     /// <summary>
@@ -74,7 +77,7 @@ public class Milestone
     {
         if (workItem == null)
         {
-            throw new ArgumentNullException(nameof(workItem));
+            return Result.Failure(new MilestoneWorkItemErrorException());
         }
 
         var existingWorkItem = _workItems.FirstOrDefault(wi => wi.Equals(workItem.Id));
