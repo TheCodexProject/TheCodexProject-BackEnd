@@ -8,7 +8,7 @@ public class WorkspaceOwnerNotFoundException : Exception
     /// <summary>
     /// The default message.
     /// </summary>
-    public WorkspaceOwnerNotFoundException() : base("The owner couldn't be found") { }
+    public WorkspaceOwnerNotFoundException() : base("Owner was not found") { }
 
     /// <summary>
     /// Used for custom messages.

@@ -8,7 +8,7 @@ public class WorkspaceContactNotFoundException : Exception
     /// <summary>
     /// The default message.
     /// </summary>
-    public WorkspaceContactNotFoundException() : base("The contact couldn't be found") { }
+    public WorkspaceContactNotFoundException() : base("Contact was not found") { }
 
     /// <summary>
     /// Used for custom messages.

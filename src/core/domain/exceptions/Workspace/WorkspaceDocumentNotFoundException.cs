@@ -8,7 +8,7 @@ public class WorkspaceDocumentNotFoundException : Exception
     /// <summary>
     /// The default message.
     /// </summary>
-    public WorkspaceDocumentNotFoundException() : base("The document couldn't be found") { }
+    public WorkspaceDocumentNotFoundException() : base("Document was not found") { }
 
     /// <summary>
     /// Used for custom messages.

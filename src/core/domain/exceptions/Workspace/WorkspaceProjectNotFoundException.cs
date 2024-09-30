@@ -8,7 +8,7 @@ public class WorkspaceProjectNotFoundException : Exception
     /// <summary>
     /// The default message.
     /// </summary>
-    public WorkspaceProjectNotFoundException() : base("The workspace couldn't be found") { }
+    public WorkspaceProjectNotFoundException() : base("Project was not found") { }
 
     /// <summary>
     /// Used for custom messages.
