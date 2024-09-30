@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using domain.exceptions.Organisation;
+using domain.models.documentation;
 using domain.models.Interfaces;
 using domain.models.organisation.values;
 using domain.models.shared;
@@ -30,8 +31,15 @@ public class Organisation : IOwnership
     public ReadOnlyCollection<IOwnership> Owners => _owners.AsReadOnly();
     
     
-    // TODO: Add the following property after merge.
-    // public IEnumerable<Documentation> Docs { get; }
+    /// <summary>
+    /// A list of the documentation of the organisation.
+    /// </summary>
+    private List<Documentation> _documentation { get; }
+
+    /// <summary>
+    /// Returns a read-only collection of the documentation of the organisation.
+    /// </summary>
+    public ReadOnlyCollection<Documentation> Documentation => _documentation.AsReadOnly();
     
     private Organisation()
     {
@@ -57,7 +65,12 @@ public class Organisation : IOwnership
         
         return Result.Success();
     }
-    
+
+    /// <summary>
+    /// Adds the given owner to the organisation.
+    /// </summary>
+    /// <param name="owner">The owner to be added.</param>
+    /// <returns></returns>
     public Result AddOwner(IOwnership? owner)
     {
         // ! VALIDATION
@@ -79,7 +92,12 @@ public class Organisation : IOwnership
         
         return Result.Success();
     }
-    
+
+    /// <summary>
+    /// Removes the given owner from the organisation.
+    /// </summary>
+    /// <param name="owner">The owner to be removed.</param>
+    /// <returns></returns>
     public Result RemoveOwner(IOwnership? owner)
     {
         //! VALIDATION
@@ -106,6 +124,54 @@ public class Organisation : IOwnership
         // Remove the owner.
         _owners.Remove(owner);
         
+        return Result.Success();
+    }
+
+    /// <summary>
+    /// Adds the given documentation to the organisation.
+    /// </summary>
+    /// <param name="documentation">The documentation to be added.</param>
+    /// <returns></returns>
+    public Result AddDocumentation(Documentation? documentation)
+    {
+        // ? Check if the documentation is null
+        if(documentation == null)
+        {
+            return Result.Failure(new OrganisationDocumentationNotFoundException("The given documentation is null."));
+        }
+
+        // ? Check if the documentation is in the list?
+        if(_documentation.Contains(documentation))
+        {
+            return Result.Failure(new OrganisationDocumentationAlreadyExistsException());
+        }
+
+        _documentation.Add(documentation);
+
+        return Result.Success();
+    }
+
+    /// <summary>
+    /// Removes the given documentation from the organisation.
+    /// </summary>
+    /// <param name="documentation">The documentation to be removed.</param>
+    /// <returns></returns>
+    public Result RemoveDocumentation(Documentation? documentation)
+    {
+        // ? Check if the documentation is null
+        if(documentation == null)
+        {
+            return Result.Failure(new OrganisationDocumentationNotFoundException("The given documentation is null."));
+        }
+
+        // ? Check if the documentation is in the list?
+        if(!_documentation.Contains(documentation))
+        {
+            return Result.Failure(new OrganisationDocumentationNotFoundException());
+        }
+
+        _documentation.Remove(documentation);
+
         return Result.Success();
     }
 }
