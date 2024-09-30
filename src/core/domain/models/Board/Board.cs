@@ -149,15 +149,4 @@ public class Board
         _orderByExpressions.Remove(existingOrderBy);
         return Result.Success();
     }
-
-   
-
-    /// <summary>
-    /// Stores the filter and order-by expressions for later execution, but does not execute them.
-    /// </summary>
-    /// <returns>A tuple containing the stored filter and order-by expressions.</returns>
-    public (IEnumerable<FilterExpression> filters, IEnumerable<OrderByExpression> orderByExpressions) GetExpressions()
-    {
-        return (Filters, OrderByExpressions);
-    }
 }
