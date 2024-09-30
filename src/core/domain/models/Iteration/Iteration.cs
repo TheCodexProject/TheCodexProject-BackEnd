@@ -74,7 +74,7 @@ public class Iteration
     {
         if (workItem == null)
         {
-            return Result.Failure(new IteractionWorkItemNullException());
+            return Result.Failure(new IterationWorkItemNullException());
         }
 
         if (_workItems.Contains(workItem.Id)) {
@@ -94,7 +94,7 @@ public class Iteration
     {
         if (workItem == null)
         {
-            return Result.Failure(new IteractionWorkItemNullException());
+            return Result.Failure(new IterationWorkItemNullException());
         }
 
         if (!_workItems.Contains(workItem.Id))
