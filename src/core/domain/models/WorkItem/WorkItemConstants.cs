@@ -29,10 +29,10 @@ public static class WorkItemConstants
     /// </summary>
     public const WorkItemType Type = WorkItemType.Task;
     
-    public static List<WorkItem> DefaultWorkItems => new List<WorkItem>
-    { 
+    public static List<WorkItem> DefaultWorkItems =>
+    [
         WorkItem.Create(),
         WorkItem.Create(),
         WorkItem.Create()
-    };
+    ];
 }
