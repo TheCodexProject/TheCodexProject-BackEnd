@@ -34,7 +34,7 @@ public class WorkItemBuilder : IBuilder<WorkItem>
             .WithPriority(WorkItemConstants.Priority)
             .WithType(WorkItemConstants.Type)
             .WithSubItems(WorkItemConstants.DefaultWorkItems)
-            .WithDependencies(WorkItemConstants.DefaultWorkItemIds)
+            .WithDependencies(WorkItemConstants.DefaultWorkItems)
             .WithDocumentation(WorkItemConstants.DefaultDocumentations)
             .Build();
     }
@@ -183,11 +183,11 @@ public class WorkItemBuilder : IBuilder<WorkItem>
     /// </summary>
     /// <param name="dependencies">Dependencies to be set.</param>
     /// <returns></returns>
-    public WorkItemBuilder WithDependencies(List<Id<WorkItem>> dependencies)
+    public WorkItemBuilder WithDependencies(List<WorkItem> dependencies)
     {
         foreach (var dependency in dependencies)
         {
-            var result = _workItem.AddDependency(dependency);
+            var result = _workItem.AddDependency(dependency.Id);
         
             if (result.IsFailure)
             {

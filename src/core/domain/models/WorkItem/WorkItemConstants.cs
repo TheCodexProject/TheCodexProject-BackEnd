@@ -38,13 +38,6 @@ public static class WorkItemConstants
         WorkItem.Create()
     ];
 
-    public static List<Id<WorkItem>> DefaultWorkItemIds =>
-    [
-        Id<WorkItem>.Create(),
-        Id<WorkItem>.Create(),
-        Id<WorkItem>.Create()
-    ];
-
     public static List<Id<Documentation>> DefaultDocumentations =>
     [
         Id<Documentation>.Create(),

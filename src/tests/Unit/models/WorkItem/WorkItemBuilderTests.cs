@@ -35,7 +35,7 @@ public class WorkItemBuilderTests
             .WithPriority(WorkItemPriority.Low)
             .WithType(WorkItemType.Task)
             .WithSubItems(WorkItemConstants.DefaultWorkItems)
-            .WithDependencies(WorkItemConstants.DefaultWorkItemIds)
+            .WithDependencies(WorkItemConstants.DefaultWorkItems)
             .WithDocumentation(WorkItemConstants.DefaultDocumentations)
             .Build();
         
