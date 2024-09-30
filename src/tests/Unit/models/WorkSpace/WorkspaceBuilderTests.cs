@@ -1,8 +1,11 @@
 ﻿using domain.exceptions.Workspace.WorkspaceTitle;
 using domain.exceptions;
-using domain.exceptions.Workspace;
+using domain.exceptions.workspace;
 using domain.models.workspace;
+using domain.models.project;
+using domain.models.user;
 using Xunit;
+using System.Collections.Generic;
 
 namespace Unit.models.WorkspaceTests;
 
@@ -28,14 +31,13 @@ public class WorkspaceBuilderTests
     public void WorkspaceBuilder_Chains_Methods_Successfully()
     {
         // Arrange
-    
         var builder = WorkspaceBuilder.Create();
-        var user = domain.models.user.User.Create();
-        
+        var user = WorkspaceConstants.DefaultOwner;
+
         // Act
         var result = builder
-            .withTitle(WorkspaceConstants.DefaultTitle)
-            .withOwner(user)
+            .WithTitle(WorkspaceConstants.DefaultTitle)
+            .WithOwner(user)
             .Build();
 
         // Assert
@@ -66,7 +68,7 @@ public class WorkspaceBuilderTests
 
         // Act
         var result = builder
-            .withTitle("")
+            .WithTitle("")
             .Build();
 
         // Assert
@@ -82,8 +84,8 @@ public class WorkspaceBuilderTests
 
         // Act
         var result = builder
-            .withTitle(null)
-            .withOwner(null)
+            .WithTitle(null)
+            .WithOwner(null)
             .Build();
 
         // Assert
@@ -99,7 +101,7 @@ public class WorkspaceBuilderTests
 
         // Act
         var result = builder
-            .withTitle("") // Empty title triggers WorkspaceTitleEmptyException
+            .WithTitle("") // Empty title triggers WorkspaceTitleEmptyException
             .Build();
 
         // Assert
@@ -113,7 +115,7 @@ public class WorkspaceBuilderTests
         Assert.NotNull(requiredFieldMissingException);
         Assert.IsType<WorkspaceTitleEmptyException>(requiredFieldMissingException.InnerException);
     }
-    
+
     // Test to verify that not setting the owner returns a failure with RequiredFieldMissingException with an inner exception of WorkspaceOwnerEmptyException.
     [Fact]
     public void WorkspaceBuilder_Changes_WorkspaceOwnerEmptyException_To_RequiredFieldMissingException()
@@ -123,7 +125,7 @@ public class WorkspaceBuilderTests
 
         // Act
         var result = builder
-            .withTitle("Title")
+            .WithTitle("Title")
             .Build();
 
         // Assert
@@ -137,5 +139,88 @@ public class WorkspaceBuilderTests
         Assert.NotNull(requiredFieldMissingException);
         Assert.IsType<WorkspaceOwnerEmptyException>(requiredFieldMissingException.InnerException);
     }
-}
 
+    // Add Projects - Ensure projects are added successfully.
+    [Fact]
+    public void WorkspaceBuilder_Adds_Projects_Successfully()
+    {
+        // Arrange
+        var builder = WorkspaceBuilder.Create();
+        var project1 = Project.Create(); // Replace with a valid way to create a Project instance
+        var project2 = Project.Create();
+        var projects = new List<Project> { project1, project2 };
+
+        // Act
+        var result = builder
+            .WithTitle(WorkspaceConstants.DefaultTitle)
+            .WithOwner(WorkspaceConstants.DefaultOwner)
+            .WithProjects(projects)
+            .Build();
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal(2, result.Value.Projects.Count);
+    }
+
+    // Add Contacts - Ensure contacts are added successfully.
+    [Fact]
+    public void WorkspaceBuilder_Adds_Contacts_Successfully()
+    {
+        // Arrange
+        var builder = WorkspaceBuilder.Create();
+        var user1 = User.Create(); // Replace with a valid way to create a User instance
+        var user2 = User.Create();
+        var contacts = new List<User> { user1, user2 };
+
+        // Act
+        var result = builder
+            .WithTitle(WorkspaceConstants.DefaultTitle)
+            .WithOwner(WorkspaceConstants.DefaultOwner)
+            .WithContacts(contacts)
+            .Build();
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal(2, result.Value.Contacts.Count);
+    }
+
+    // Add Empty Project List - Ensure that adding an empty project list succeeds.
+    [Fact]
+    public void WorkspaceBuilder_Adds_Empty_Project_List_Successfully()
+    {
+        // Arrange
+        var builder = WorkspaceBuilder.Create();
+        var projects = new List<Project>();
+
+        // Act
+        var result = builder
+            .WithTitle(WorkspaceConstants.DefaultTitle)
+            .WithOwner(WorkspaceConstants.DefaultOwner)
+            .WithProjects(projects)
+            .Build();
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Empty(result.Value.Projects);
+    }
+
+    // Add Empty Contact List - Ensure that adding an empty contact list succeeds.
+    [Fact]
+    public void WorkspaceBuilder_Adds_Empty_Contact_List_Successfully()
+    {
+        // Arrange
+        var builder = WorkspaceBuilder.Create();
+        var contacts = new List<User>();
+
+        // Act
+        var result = builder
+            .WithTitle(WorkspaceConstants.DefaultTitle)
+            .WithOwner(WorkspaceConstants.DefaultOwner)
+            .WithContacts(contacts)
+            .Build();
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Empty(result.Value.Contacts);
+    }
+}
