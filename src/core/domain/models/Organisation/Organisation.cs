@@ -58,16 +58,39 @@ public class Organisation : IOwnership
         return Result.Success();
     }
     
-    public Result AddOwner(IOwnership owner)
+    public Result AddOwner(IOwnership? owner)
     {
+        // ! VALIDATION
+
+        // ? Check if the owner is null
+        if(owner == null)
+        {
+            return Result.Failure(new OrganisationOwnerNotFoundException("The given owner is null."));
+        }
+
+        // ? Check if the Owner is in the list?
+        if(_owners.Contains(owner))
+        {
+            return Result.Failure(new OrganisationOwnerAlreadyExistsException());
+        }
+
         // What validation should be done here, if any?
-        _owners?.Add(owner);
+        _owners.Add(owner);
         
         return Result.Success();
     }
     
-    public Result RemoveOwner(IOwnership owner)
+    public Result RemoveOwner(IOwnership? owner)
     {
+        //! VALIDATION
+
+        // ? Check if the owner is null
+        if(owner == null)
+        {
+            return Result.Failure(new OrganisationOwnerNotFoundException("The given owner is null."));
+        }
+
+
         // There needs to be at least one owner at all times for an organisation to exist.
         if (_owners.Count() == 1)
         {
