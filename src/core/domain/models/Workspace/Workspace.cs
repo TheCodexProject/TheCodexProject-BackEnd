@@ -21,6 +21,11 @@ public class Workspace
     /// Holds a list of resources, this cloud be a projekts or documents.
     /// </summary>
     public List<IResource> Resources { get; private set; }
+    
+    /// <summary>
+    /// This allows for either a User or Organisation to be the owner of the Workspace.
+    /// </summary>
+    public IOwnership Owner { get; private set; }
 
     /// <summary>
     /// Creates a new instance of <see cref="Workspace"/> with default values.
@@ -90,6 +95,12 @@ public class Workspace
         }
 
         Resources.Remove(existingResource);
+        return Result.Success();
+    }
+    
+    public Result UpdateOwner(IOwnership owner)
+    {
+        Owner = owner;
         return Result.Success();
     }
 }
