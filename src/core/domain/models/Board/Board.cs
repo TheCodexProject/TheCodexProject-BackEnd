@@ -79,8 +79,6 @@ public class Board
         return Result.Success();
     }
 
-    #region Filter Methods
-
     /// <summary>
     /// Adds a filter expression to the board.
     /// </summary>
@@ -116,9 +114,6 @@ public class Board
         return Result.Success();
     }
 
-    #endregion
-
-    #region OrderBy Methods
 
     /// <summary>
     /// Adds an order-by expression to the board.
@@ -155,7 +150,7 @@ public class Board
         return Result.Success();
     }
 
-    #endregion
+   
 
     /// <summary>
     /// Stores the filter and order-by expressions for later execution, but does not execute them.
