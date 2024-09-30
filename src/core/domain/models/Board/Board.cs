@@ -93,6 +93,11 @@ public class Board
             return Result.Failure(result.Errors.ToArray());
         }
 
+        if (_filters.Contains(result.Value))
+        {
+            return Result.Failure(new BoardOrderByAlreadyExistsException());
+        }
+
         _filters.Add(result.Value);
         return Result.Success();
     }
@@ -125,6 +130,11 @@ public class Board
         if (result.IsFailure)
         {
             return Result.Failure(result.Errors.ToArray());
+        }
+
+        if (_orderByExpressions.Contains(result.Value))
+        {
+            return Result.Failure(new BoardOrderByAlreadyExistsException());
         }
 
         _orderByExpressions.Add(result.Value);
