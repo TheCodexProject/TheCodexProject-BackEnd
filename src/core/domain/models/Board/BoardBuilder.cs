@@ -1,7 +1,9 @@
 ﻿using domain.exceptions;
 using domain.exceptions.board.boardTitle;
 using domain.interfaces;
+using domain.models.workItem;
 using OperationResult;
+using System.Linq.Expressions;
 
 namespace domain.models.board;
 
@@ -39,6 +41,47 @@ public class BoardBuilder : IBuilder<Board>
 
         return this;
     }
+
+    /// <summary>
+    /// Adds a list of Filters to the board.
+    /// </summary>
+    /// <param name="filters">filters to be set.</param>
+    /// <returns></returns>
+    public BoardBuilder WithFilters(List<Expression<Func<WorkItem, bool>>> filters)
+    {
+        foreach (var filter in filters)
+        {
+            var result = _board.AddFilter(filter);
+
+            if (result.IsFailure)
+            {
+                _errors.AddRange(result.Errors);
+            }
+        }
+
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a list of Filters to the board.
+    /// </summary>
+    /// <param name="orderBys">orderBys to be set.</param>
+    /// <returns></returns>
+    public BoardBuilder WithOrderBy(List<Expression<Func<WorkItem, object>>> orderBys)
+    {
+        foreach (var orderBy in orderBys)
+        {
+            var result = _board.AddOrderBy(orderBy);
+
+            if (result.IsFailure)
+            {
+                _errors.AddRange(result.Errors);
+            }
+        }
+
+        return this;
+    }
+
 
     /// <summary>
     /// Builds the <see cref="Board"/> instance.

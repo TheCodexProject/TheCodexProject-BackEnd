@@ -3,7 +3,7 @@ using domain.models.board.values;
 using domain.models.workItem;
 using System.Linq.Expressions;
 
-namespace Unit.values.boardTest;
+namespace Unit.values.Board;
 
 public class OrderByExpressionTests
 {

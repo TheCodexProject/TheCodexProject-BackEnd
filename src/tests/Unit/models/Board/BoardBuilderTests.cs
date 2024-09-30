@@ -1,6 +1,8 @@
 ﻿using domain.exceptions.board.boardTitle;
 using domain.exceptions;
 using domain.models.board;
+using System.Linq.Expressions;
+using domain.models.workItem;
 
 namespace Unit.models.board;
 
@@ -114,5 +116,113 @@ public class BoardBuilderTests
         var requiredFieldMissingException = result.Errors.OfType<RequiredFieldMissingException>().FirstOrDefault();
         Assert.NotNull(requiredFieldMissingException);
         Assert.IsType<BoardTitleEmptyException>(requiredFieldMissingException.InnerException);
+    }
+
+    /// <summary>
+    /// Test to ensure that filters are added successfully.
+    /// </summary>
+    [Fact]
+    public void BoardBuilder_Adds_Filters_Successfully()
+    {
+        // Arrange
+        var builder = BoardBuilder.Create();
+
+        // Act
+        var result = builder
+            .WithTitle(BoardConstants.DefaultTitle)
+            .WithFilters(BoardConstants.ExampleFilters)
+            .Build();
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal(BoardConstants.ExampleFilters.Count, result.Value.Filters.Count);
+    }
+
+    /// <summary>
+    /// Test to ensure that order-by expressions are added successfully.
+    /// </summary>
+    [Fact]
+    public void BoardBuilder_Adds_OrderByExpressions_Successfully()
+    {
+        // Arrange
+        var builder = BoardBuilder.Create();
+
+        // Act
+        var result = builder
+            .WithTitle(BoardConstants.DefaultTitle)
+            .WithOrderBy(BoardConstants.ExampleOrderBys)
+            .Build();
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal(BoardConstants.ExampleOrderBys.Count, result.Value.OrderByExpressions.Count);
+    }
+
+    /// <summary>
+    /// Test to ensure that builder fails when invalid filters are provided.
+    /// </summary>
+    [Fact]
+    public void BoardBuilder_With_Invalid_Filter_Fails()
+    {
+        // Arrange
+        var builder = BoardBuilder.Create();
+        var invalidFilters = new List<Expression<Func<WorkItem, bool>>>
+        {
+            null // Adding a null filter to simulate invalid input.
+        };
+
+        // Act
+        var result = builder
+            .WithTitle(BoardConstants.DefaultTitle)
+            .WithFilters(invalidFilters)
+            .Build();
+
+        // Assert
+        Assert.True(result.IsFailure);
+    }
+
+    /// <summary>
+    /// Test to ensure that builder fails when invalid order-by expressions are provided.
+    /// </summary>
+    [Fact]
+    public void BoardBuilder_With_Invalid_OrderBy_Fails()
+    {
+        // Arrange
+        var builder = BoardBuilder.Create();
+        var invalidOrderBys = new List<Expression<Func<WorkItem, object>>>
+        {
+            null // Adding a null order-by expression to simulate invalid input.
+        };
+
+        // Act
+        var result = builder
+            .WithTitle(BoardConstants.DefaultTitle)
+            .WithOrderBy(invalidOrderBys)
+            .Build();
+
+        // Assert
+        Assert.True(result.IsFailure);
+    }
+
+    /// <summary>
+    /// Test to ensure that builder adds both filters and order-by expressions successfully.
+    /// </summary>
+    [Fact]
+    public void BoardBuilder_Adds_Filters_And_OrderBy_Successfully()
+    {
+        // Arrange
+        var builder = BoardBuilder.Create();
+
+        // Act
+        var result = builder
+            .WithTitle(BoardConstants.DefaultTitle)
+            .WithFilters(BoardConstants.ExampleFilters)
+            .WithOrderBy(BoardConstants.ExampleOrderBys)
+            .Build();
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal(BoardConstants.ExampleFilters.Count, result.Value.Filters.Count);
+        Assert.Equal(BoardConstants.ExampleOrderBys.Count, result.Value.OrderByExpressions.Count);
     }
 }
