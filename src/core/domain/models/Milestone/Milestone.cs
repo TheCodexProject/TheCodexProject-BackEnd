@@ -62,7 +62,7 @@ public class Milestone
     {
         if (workItem == null)
         {
-            return Result.Failure(new MilestoneWorkItemErrorException());
+            return Result.Failure(new MilestoneWorkItemNotFoundException());
         }
         _workItems.Add(workItem.Id);
 

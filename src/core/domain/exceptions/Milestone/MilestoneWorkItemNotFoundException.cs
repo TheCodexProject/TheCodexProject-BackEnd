@@ -11,7 +11,7 @@ public class MilestoneWorkItemNotFoundException : Exception
     /// <summary>
     /// The default message.
     /// </summary>
-    public MilestoneWorkItemNotFoundException() : base("Workitem not found in Milestone.") { }
+    public MilestoneWorkItemNotFoundException() : base("Workitem not found.") { }
 
     /// <summary>
     /// Used for custom messages.
