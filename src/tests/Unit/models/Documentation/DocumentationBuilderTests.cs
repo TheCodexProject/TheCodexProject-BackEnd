@@ -4,6 +4,7 @@ using domain.exceptions.documentation.documentationFormat;
 using domain.exceptions.documentation.documentationTitle;
 using domain.exceptions.project.ProjectTitle;
 using domain.models.documentation;
+using OperationResult;
 using Xunit;
 
 namespace Unit.values.documentation
@@ -121,6 +122,7 @@ namespace Unit.values.documentation
             // Assert
             Assert.True(documentation.IsFailure);
             Assert.Contains(documentation.Errors, e => e is DocumentationFormatDoesNotFollowConventionException);
+            Assert.Contains(documentation.Errors, e => e is DocumentationFormatDoesNotStartWithDot);
         }
 
         /// <summary>
@@ -142,6 +144,8 @@ namespace Unit.values.documentation
             // Assert
             Assert.True(documentation.IsFailure);
             Assert.Contains(documentation.Errors, e => e is DocumentationFormatTooLongException);
+            Assert.Contains(documentation.Errors, e => e is DocumentationFormatDoesNotFollowConventionException);
+            Assert.Contains(documentation.Errors, e => e is DocumentationFormatDoesNotStartWithDot);
         }
 
         /// <summary>

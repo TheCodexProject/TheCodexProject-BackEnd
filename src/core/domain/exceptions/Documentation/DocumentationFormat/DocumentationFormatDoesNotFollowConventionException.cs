@@ -11,7 +11,7 @@ public class DocumentationFormatDoesNotFollowConventionException : Exception
     /// <summary>
     /// The default message.
     /// </summary>
-    public DocumentationFormatDoesNotFollowConventionException() : base("Format doesn't follow conventions, it must contain atleast a dot and a single character.") { }
+    public DocumentationFormatDoesNotFollowConventionException() : base("Format doesn't follow the convention: It must start with a dot and contain at least one single character.") { }
 
     /// <summary>
     /// Used for custom messages.

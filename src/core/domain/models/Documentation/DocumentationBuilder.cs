@@ -63,7 +63,7 @@ public class DocumentationBuilder
 
     public Result<Documentation> Build()
     {
-        // ? Check if there are any ProjectTitleEmptyExceptions in the errors list.
+        // ? Check if there are any DocumentationTitleEmptyException in the errors list.
         if (_errors.Any(e => e is DocumentationTitleEmptyException))
         {
             // * Take out the DocumentationTitleEmptyException from errors and store it in a variable.
@@ -108,11 +108,11 @@ public class DocumentationBuilder
             }
             if (_documentation.Content == null)
             {
-                _errors.Add(new RequiredFieldMissingException("Title is required.", new DocumentationContentEmptyException()));
+                _errors.Add(new RequiredFieldMissingException("Content is required.", new DocumentationContentEmptyException()));
             }
             if (_documentation.Format == null)
             {
-                _errors.Add(new RequiredFieldMissingException("Title is required.", new DocumentationFormatEmptyException()));
+                _errors.Add(new RequiredFieldMissingException("Format is required.", new DocumentationFormatEmptyException()));
             }
         }
 

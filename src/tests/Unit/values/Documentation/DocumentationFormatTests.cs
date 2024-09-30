@@ -158,6 +158,7 @@ namespace Unit.values.documentation
 
             // Assert
             Assert.True(result.IsFailure);
+            Assert.Contains(result.Errors, e => e is DocumentationFormatDoesNotStartWithDot);
         }
 
         /// <summary>
