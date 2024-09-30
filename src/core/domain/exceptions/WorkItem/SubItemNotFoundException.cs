@@ -8,7 +8,7 @@ public class SubItemNotFoundException : Exception
     /// <summary>
     /// The default message.
     /// </summary>
-    public SubItemNotFoundException() : base("Sub Items was not found.") { }
+    public SubItemNotFoundException() : base("Sub-item was not found.") { }
     
     /// <summary>
     /// Used for custom messages.

@@ -280,7 +280,7 @@ public class WorkItem
         if (item is null)
         {
             // ! Returns an error if the sub item is null.
-            return Result.Failure(new SubItemNotFoundException("The given sub item is null."));
+            return Result.Failure(new SubItemNotFoundException("The given sub-item is null."));
         }
 
         // ? Check if the item already exists in the list.
@@ -337,7 +337,7 @@ public class WorkItem
         // ? Check if the item is null.
         if (item is null)
         {
-            return Result.Failure(new SubItemNotFoundException("The given sub item is null."));
+            return Result.Failure(new SubItemNotFoundException("The given sub-item is null."));
         }
                 
         // ? Look if the item exists in the list.
