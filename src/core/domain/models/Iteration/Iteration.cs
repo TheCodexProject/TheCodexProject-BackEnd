@@ -20,7 +20,7 @@ public class Iteration
     public IterationTitle? Title { get; private set; }
 
     /// <summary>
-    /// Holds a IEnumerable of WorkItems.
+    /// Holds a ReadOnlyCollection of WorkItems.
     /// </summary>
     public ReadOnlyCollection<Id<WorkItem>> WorkItems => _workItems.AsReadOnly();
     private readonly List<Id<WorkItem>> _workItems;
@@ -74,7 +74,7 @@ public class Iteration
     {
         if (workItem == null)
         {
-            Result.Failure(new IteractionWorkItemNullException());
+            return Result.Failure(new IteractionWorkItemNullException());
         }
 
         _workItems.Add(workItem.Id);
@@ -90,7 +90,7 @@ public class Iteration
     {
         if (workItem == null)
         {
-            Result.Failure(new IteractionWorkItemNullException());
+            return Result.Failure(new IteractionWorkItemNullException());
         }
 
         if (!_workItems.Contains(workItem.Id))
