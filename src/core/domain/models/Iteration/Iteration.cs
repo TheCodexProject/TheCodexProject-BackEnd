@@ -77,6 +77,10 @@ public class Iteration
             return Result.Failure(new IteractionWorkItemNullException());
         }
 
+        if (_workItems.Contains(workItem.Id)) {
+            return Result.Failure(new IterationWorkItemAlreadyExistsException());
+        }
+
         _workItems.Add(workItem.Id);
 
         return Result.Success();
