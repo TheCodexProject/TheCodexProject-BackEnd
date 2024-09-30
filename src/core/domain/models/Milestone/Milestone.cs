@@ -63,14 +63,14 @@ public class Milestone
     {
         if (workItems == null)
         {
-            return Result.Failure(new MilestoneWorkItemNotFoundException());
+            return Result.Failure(new MilestoneWorkItemNotFoundException("The given work items are null"));
         }
 
         foreach (var workItem in workItems)
         {
             if (workItem == null)
             {
-                return Result.Failure(new MilestoneWorkItemNotFoundException());
+                return Result.Failure(new MilestoneWorkItemNotFoundException("A work item in the list is null"));
             }
             _workItems.Add(workItem.Id);
         }
