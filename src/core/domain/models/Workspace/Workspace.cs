@@ -33,24 +33,24 @@ public class Workspace
     private readonly List<Project> _projects = new List<Project>();
 
     /// <summary>
-    /// Holds a private list of contacts/users.
-    /// </summary>
-    private readonly List<User> _contacts = new List<User>();
-
-    /// <summary>
-    /// Holds a private list of documents.
-    /// </summary>
-    private readonly List<Documentation> _documents = new List<Documentation>();
-
-    /// <summary>
     /// Exposes a read-only view of projects.
     /// </summary>
     public ReadOnlyCollection<Project> Projects => _projects.AsReadOnly();
 
     /// <summary>
+    /// Holds a private list of contacts/users.
+    /// </summary>
+    private readonly List<User> _contacts = new List<User>();
+
+    /// <summary>
     /// Exposes a read-only view of contacts/users.
     /// </summary>
     public ReadOnlyCollection<User> Contacts => _contacts.AsReadOnly();
+
+    /// <summary>
+    /// Holds a private list of documents.
+    /// </summary>
+    private readonly List<Documentation> _documents = new List<Documentation>();
 
     /// <summary>
     /// Exposes a read-only view of documents.
