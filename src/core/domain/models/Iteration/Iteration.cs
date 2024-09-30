@@ -3,6 +3,7 @@ using domain.models.shared;
 using domain.models.workItem;
 using OperationResult;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace domain.models.iteration;
 
@@ -69,13 +70,16 @@ public class Iteration
     /// Adds a workitem to the list of workitems.
     /// </summary>
     /// <param name="workItem">The workitem to add.</param>
-    public void AddWorkItem(WorkItem workItem)
+    public Result AddWorkItem(WorkItem workItem)
     {
         if (workItem == null)
         {
-            throw new ArgumentNullException(nameof(workItem));
+            return Result.Failure(new ArgumentNullException(nameof(workItem), "WorkItem cannot be null"));
         }
+
         _workItems.Add(workItem.Id);
+
+        return Result.Success();
     }
 
     /// <summary>
@@ -86,18 +90,16 @@ public class Iteration
     {
         if (workItem == null)
         {
-            throw new ArgumentNullException(nameof(workItem));
+            throw new ArgumentNullException(nameof(workItem), "WorkItem cannot be null");
         }
 
-        var existingWorkItem = _workItems.FirstOrDefault(wi => wi.Equals(workItem.Id));
-
-        if (existingWorkItem == null)
+        if (!_workItems.Contains(workItem.Id))
         {
-            // WorkItem not found, return failure.
-            return Result.Failure();
+            // WorkItem not found, return failure with a specific exception.
+            return Result.Failure(new KeyNotFoundException($"The given WorkItem with ID '{workItem.Id}' was not found in the iteration."));
         }
 
-        _workItems.Remove(existingWorkItem);
+        _workItems.Remove(workItem.Id);
         return Result.Success();
     }
 }

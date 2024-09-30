@@ -3,12 +3,14 @@ using domain.interfaces;
 using domain.models.workspace;
 using OperationResult;
 using domain.exceptions.iteration.iterationTitle;
+using domain.models.workItem;
+using System.Linq.Expressions;
 
 namespace domain.models.iteration;
 
 public class IterationBuilder : IBuilder<Iteration>
 {
-    private readonly Iteration iteration = Iteration.Create();
+    private readonly Iteration _iteration = Iteration.Create();
     private readonly List<Exception> _errors = new();
 
 
@@ -33,7 +35,7 @@ public class IterationBuilder : IBuilder<Iteration>
     /// <param name="value">Title to use.</param>
     public IterationBuilder withTitle(string title)
     {
-        var result = iteration.UpdateTitle(title);
+        var result = _iteration.UpdateTitle(title);
 
         if (result.IsFailure)
         {
@@ -42,6 +44,27 @@ public class IterationBuilder : IBuilder<Iteration>
 
         return this;
     }
+
+    /// <summary>
+    /// Adds a list of Workitems to the iteration.
+    /// </summary>
+    /// <param name="workItems">workItems to be set.</param>
+    /// <returns></returns>
+    public IterationBuilder WithWorkitems(List<WorkItem> workItems)
+    {
+        foreach (var workItem in workItems)
+        {
+            var result = _iteration.AddWorkItem(workItem);
+
+            if (result.IsFailure)
+            {
+                _errors.AddRange(result.Errors);
+            }
+        }
+
+        return this;
+    }
+
 
     /// <summary>
     /// Function to the build <see cref="IterationBuilder"/>.
@@ -65,13 +88,13 @@ public class IterationBuilder : IBuilder<Iteration>
         }
         else
         {
-            if (iteration.Title == null)
+            if (_iteration.Title == null)
             {
                 _errors.Add(new RequiredFieldMissingException("Title is required", new IterationTitleEmptyException()));
             }
         }
 
-        return _errors.Any() ? Result<Iteration>.Failure(_errors.ToArray()) : iteration;
+        return _errors.Any() ? Result<Iteration>.Failure(_errors.ToArray()) : _iteration;
     }
 
     /// <summary>
