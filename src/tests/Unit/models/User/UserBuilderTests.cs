@@ -2,7 +2,7 @@ using domain.exceptions;
 using domain.exceptions.User.FirstName;
 using domain.models.user;
 
-namespace Unit.models.User;
+namespace Unit.models.user;
 
 public class UserBuilderTests
 {

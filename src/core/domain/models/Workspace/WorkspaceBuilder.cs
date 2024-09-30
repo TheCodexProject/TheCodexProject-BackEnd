@@ -1,17 +1,18 @@
 ﻿using domain.exceptions;
-using domain.exceptions.Workspace;
+using domain.exceptions.workspace;
 using domain.exceptions.Workspace.WorkspaceTitle;
 using domain.interfaces;
 using domain.models.Interfaces;
+using domain.models.project;
+using domain.models.user;
 using OperationResult;
 
 namespace domain.models.workspace;
 
 public class WorkspaceBuilder : IBuilder<Workspace>
 {
-    private readonly Workspace workspace = Workspace.Create();
+    private readonly Workspace _workspace = Workspace.Create();
     private readonly List<Exception> _errors = new();
-
 
     /// <summary>
     /// The private constructor for the <see cref="WorkspaceBuilder"/> class.
@@ -21,7 +22,6 @@ public class WorkspaceBuilder : IBuilder<Workspace>
     /// <summary>
     /// Factory method to create a new instance of the <see cref="WorkspaceBuilder"/> class.
     /// </summary>
-    /// <param name="value">Title to use.</param>
     /// <returns>A <see cref="WorkspaceBuilder"/></returns>
     public static WorkspaceBuilder Create()
     {
@@ -31,10 +31,10 @@ public class WorkspaceBuilder : IBuilder<Workspace>
     /// <summary>
     /// Function to add title to the build of <see cref="WorkspaceBuilder"/>.
     /// </summary>
-    /// <param name="value">Title to use.</param>
-    public WorkspaceBuilder withTitle(string title)
+    /// <param name="title">Title to use.</param>
+    public WorkspaceBuilder WithTitle(string title)
     {
-        var result = workspace.UpdateTitle(title);
+        var result = _workspace.UpdateTitle(title);
 
         if (result.IsFailure)
         {
@@ -43,25 +43,68 @@ public class WorkspaceBuilder : IBuilder<Workspace>
 
         return this;
     }
-    
+
     /// <summary>
     /// Function to add owner to the build of <see cref="WorkspaceBuilder"/>.
     /// </summary>
     /// <param name="owner">Owner to use.</param>
     /// <returns></returns>
-    public WorkspaceBuilder withOwner(IOwnership owner)
+    public WorkspaceBuilder WithOwner(IOwnership owner)
     {
-        workspace.UpdateOwner(owner);
+        var result = _workspace.UpdateOwner(owner);
+
+        if (result.IsFailure)
+        {
+            _errors.AddRange(result.Errors);
+        }
+
+        return this;
+    }
+
+    /// <summary>
+    /// Function to add projects to the build of <see cref="WorkspaceBuilder"/>.
+    /// </summary>
+    /// <param name="projects">Projects to add.</param>
+    public WorkspaceBuilder WithProjects(List<Project> projects)
+    {
+        foreach (var project in projects)
+        {
+            var result = _workspace.AddProject(project);
+            if (result.IsFailure)
+            {
+                _errors.AddRange(result.Errors);
+            }
+        }
+
+        return this;
+    }
+
+    /// <summary>
+    /// Function to add contacts to the build of <see cref="WorkspaceBuilder"/>.
+    /// </summary>
+    /// <param name="contacts">Contacts to add.</param>
+    public WorkspaceBuilder WithContacts(List<User> contacts)
+    {
+        foreach (var contact in contacts)
+        {
+            var result = _workspace.AddContact(contact);
+            if (result.IsFailure)
+            {
+                _errors.AddRange(result.Errors);
+            }
+        }
+
         return this;
     }
 
     /// <summary>
     /// Function to the build <see cref="WorkspaceBuilder"/>.
     /// </summary>
-    public Result<Workspace> Build() {
-
+    public Result<Workspace> Build()
+    {
         // Required fields
-        if (_errors.Any(e => e is WorkspaceTitleEmptyException)) {
+        if (_errors.Any(e => e is WorkspaceTitleEmptyException))
+        {
             // * Take out the WorkspaceTitleEmptyException from errors and store it in a variable.
             var error = _errors.First(e => e is WorkspaceTitleEmptyException);
 
@@ -71,20 +114,21 @@ public class WorkspaceBuilder : IBuilder<Workspace>
             // * Create a new RequiredFieldMissingException with the WorkspaceTitleEmptyException as the inner exception.
             var requiredFieldMissingException = new RequiredFieldMissingException("Title is required.", error);
             _errors.Insert(0, requiredFieldMissingException);
-
-        } else {
-            if (workspace.Title == null)
+        }
+        else
+        {
+            if (_workspace.Title == null)
             {
                 _errors.Add(new RequiredFieldMissingException("Title is required", new WorkspaceTitleEmptyException()));
             }
         }
-        
-        if(workspace.Owner == null)
+
+        if (_workspace.Owner == null)
         {
-            _errors.Add(new RequiredFieldMissingException("Owner is required",new WorkspaceOwnerEmptyException()));
+            _errors.Add(new RequiredFieldMissingException("Owner is required", new WorkspaceOwnerEmptyException()));
         }
-        
-        return _errors.Any() ? Result<Workspace>.Failure(_errors.ToArray()) : workspace;
+
+        return _errors.Any() ? Result<Workspace>.Failure(_errors.ToArray()) : _workspace;
     }
 
     /// <summary>
@@ -92,6 +136,6 @@ public class WorkspaceBuilder : IBuilder<Workspace>
     /// </summary>
     public Result<Workspace> MakeDefault()
     {
-        return withTitle(WorkspaceConstants.DefaultTitle).withOwner(WorkspaceConstants.DefaultOwner).Build();
+        return new WorkspaceBuilder().WithTitle(WorkspaceConstants.DefaultTitle).WithOwner(WorkspaceConstants.DefaultOwner).Build();
     }
 }
