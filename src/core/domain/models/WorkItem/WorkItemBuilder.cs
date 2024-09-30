@@ -1,6 +1,8 @@
 using domain.exceptions;
 using domain.exceptions.WorkItem.WorkItemTitle;
 using domain.interfaces;
+using domain.models.documentation;
+using domain.models.shared;
 using domain.models.user;
 using domain.models.workItem.values;
 using OperationResult;
@@ -32,7 +34,8 @@ public class WorkItemBuilder : IBuilder<WorkItem>
             .WithPriority(WorkItemConstants.Priority)
             .WithType(WorkItemConstants.Type)
             .WithSubItems(WorkItemConstants.DefaultWorkItems)
-            .WithDependencies(WorkItemConstants.DefaultWorkItems)
+            .WithDependencies(WorkItemConstants.DefaultWorkItemIds)
+            .WithDocumentation(WorkItemConstants.DefaultDocumentations)
             .Build();
     }
     
@@ -180,11 +183,11 @@ public class WorkItemBuilder : IBuilder<WorkItem>
     /// </summary>
     /// <param name="dependencies">Dependencies to be set.</param>
     /// <returns></returns>
-    public WorkItemBuilder WithDependencies(List<WorkItem> dependencies)
+    public WorkItemBuilder WithDependencies(List<Id<WorkItem>> dependencies)
     {
         foreach (var dependency in dependencies)
         {
-            var result = _workItem.AddDependency(dependency.Id);
+            var result = _workItem.AddDependency(dependency);
         
             if (result.IsFailure)
             {
@@ -194,6 +197,27 @@ public class WorkItemBuilder : IBuilder<WorkItem>
         
         return this;
     }
+
+    /// <summary>
+    /// Adds a list of documentations to the work item.
+    /// </summary>
+    /// <param name="documentations">Documentation to be set.</param>
+    /// <returns></returns>
+    public WorkItemBuilder WithDocumentation(List<Id<Documentation>> documentations)
+    {
+        foreach (var documentation in documentations)
+        {
+            var result = _workItem.AddDocumentation(documentation);
+
+            if (result.IsFailure)
+            {
+                _errors.AddRange(result.Errors);
+            }
+        }
+
+        return this;
+    }
+
     
     public Result<WorkItem> Build()
     {

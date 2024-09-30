@@ -1,5 +1,6 @@
 using domain.models.workItem;
 using domain.models.workItem.values;
+using Xunit.Abstractions;
 
 namespace Unit.models.workItem;
 
@@ -25,7 +26,7 @@ public class WorkItemBuilderTests
     {
         // Arrange
         var builder = WorkItemBuilder.Create();
-        
+
         // Act
         var result = builder
             .WithTitle("Title")
@@ -34,7 +35,8 @@ public class WorkItemBuilderTests
             .WithPriority(WorkItemPriority.Low)
             .WithType(WorkItemType.Task)
             .WithSubItems(WorkItemConstants.DefaultWorkItems)
-            .WithDependencies(WorkItemConstants.DefaultWorkItems)
+            .WithDependencies(WorkItemConstants.DefaultWorkItemIds)
+            .WithDocumentation(WorkItemConstants.DefaultDocumentations)
             .Build();
         
         // Assert

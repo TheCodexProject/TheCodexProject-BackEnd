@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using domain.exceptions.WorkItem;
+using domain.models.documentation;
 using domain.models.shared;
 using domain.models.user;
 using domain.models.workItem.values;
@@ -54,8 +55,15 @@ public class WorkItem
     /// </summary>
     public User? Assignee { get; private set; }
     
-    // TODO: Add the list of documentation to the WorkItem.
-    // public List<Documentation> Documentations { get; private set; }
+    /// <summary>
+    /// A list of documentations that are related to the WorkItem.
+    /// </summary>
+    private List<Id<Documentation>> _documentations { get; }
+
+    /// <summary>
+    /// Returns a read-only list of the documentations.
+    /// </summary>
+    public ReadOnlyCollection<Id<Documentation>> Documentations => _documentations.AsReadOnly();
     
     /// <summary>
     /// A list of sub-items that are related to the WorkItem.
@@ -86,6 +94,7 @@ public class WorkItem
         Id = Id<WorkItem>.Create();
         _subItems = new List<WorkItem>();
         _dependencies = new List<Id<WorkItem>>();
+        _documentations = new List<Id<Documentation>>();
     }
     
     /// <summary>
@@ -325,6 +334,28 @@ public class WorkItem
         return Result.Success();
     }
 
+    public Result AddDocumentation(Id<Documentation>? documentation)
+    {
+        // ! VALIDATION
+
+        // ? Check if the documentation is null.
+        if (documentation is null)
+        {
+            return Result.Failure(new DocumentationNotFoundException("The given documentation is null."));
+        }
+
+        // ? Check if the documentation already exists in the list.
+        if (_documentations.Contains(documentation))
+        {
+            return Result.Failure(new DocumentationAlreadyExistsException());
+        }
+
+        // Add the documentation.
+        _documentations.Add(documentation);
+
+        return Result.Success();
+    }
+
     /// <summary>
     /// Removes a sub item from the WorkItem.
     /// </summary>
@@ -379,4 +410,27 @@ public class WorkItem
         
         return Result.Success();
     }
+
+    public Result RemoveDocumentation(Id<Documentation>? documentation)
+    {
+        // ! VALIDATION
+
+        // ? Check if the documentation is null.
+        if (documentation is null)
+        {
+            return Result.Failure(new DocumentationNotFoundException("The given documentation is null."));
+        }
+
+        // ? Look if the documentation exists in the list.
+        if (!_documentations.Contains(documentation))
+        {
+            return Result.Failure(new DocumentationNotFoundException());
+        }
+
+        // Remove the documentation.
+        _documentations.Remove(documentation);
+
+        return Result.Success();
+    }
+
 }

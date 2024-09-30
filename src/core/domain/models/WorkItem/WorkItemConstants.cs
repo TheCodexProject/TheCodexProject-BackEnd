@@ -1,3 +1,5 @@
+using domain.models.documentation;
+using domain.models.shared;
 using domain.models.workItem.values;
 
 namespace domain.models.workItem;
@@ -34,5 +36,19 @@ public static class WorkItemConstants
         WorkItem.Create(),
         WorkItem.Create(),
         WorkItem.Create()
+    ];
+
+    public static List<Id<WorkItem>> DefaultWorkItemIds =>
+    [
+        Id<WorkItem>.Create(),
+        Id<WorkItem>.Create(),
+        Id<WorkItem>.Create()
+    ];
+
+    public static List<Id<Documentation>> DefaultDocumentations =>
+    [
+        Id<Documentation>.Create(),
+        Id<Documentation>.Create(),
+        Id<Documentation>.Create()
     ];
 }
