@@ -123,7 +123,7 @@ public class IterationTitleTests
     }
 
     /// <summary>
-    /// Test to check that you are allow to create a title with 10 characters.
+    /// Test to check that you are allow to create a title with 75 characters.
     /// </summary>
     [Fact]
     public void Title_Can_Be_Created_With_75_Characters()
