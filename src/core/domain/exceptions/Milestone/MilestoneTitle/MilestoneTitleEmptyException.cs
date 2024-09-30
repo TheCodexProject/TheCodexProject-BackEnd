@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace domain.exceptions.milestone.milestoneTitle;
 
 /// <summary>
-/// Exception for when a Project is created without a title.
+/// Exception for when a Milestone is created without a title.
 /// </summary>
 [Serializable]
 public class MilestoneTitleEmptyException : Exception

@@ -3,6 +3,7 @@ using domain.models.milestone.values;
 using domain.models.shared;
 using domain.models.workItem;
 using OperationResult;
+using System.Collections.ObjectModel;
 
 namespace domain.models.milestone;
 
@@ -11,8 +12,7 @@ public class Milestone
     public Id<Milestone> Id { get; private set; }
 
     public MilestoneTitle Title { get; private set; }
-
-    public List<Id<WorkItem>> WorkItems => _workItems;
+    public ReadOnlyCollection<Id<WorkItem>> WorkItems => _workItems.AsReadOnly();
 
     private readonly List<Id<WorkItem>> _workItems;
 
