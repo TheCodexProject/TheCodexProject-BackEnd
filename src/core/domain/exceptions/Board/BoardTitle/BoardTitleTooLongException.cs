@@ -1,36 +1,35 @@
 ﻿using System.Runtime.Serialization;
 
-namespace domain.exceptions.Workspace.WorkspaceTitle;
-
+namespace domain.exceptions.board.boardTitle;
 
 /// <summary>
-/// Exception for when a workspace is created with a too short title
+/// Exception for when a Board is created with a title that are too long.
 /// </summary>
 [Serializable]
-public class WorkspaceTitleTooShortException : Exception
+public class BoardTitleTooLongException : Exception
 {
     /// <summary>
     /// The default message.
     /// </summary>
-    public WorkspaceTitleTooShortException() : base("Title is too short, it must be more then 3 characters.") { }
+    public BoardTitleTooLongException() : base("Title cannot be more then 75 characters") { }
 
     /// <summary>
     /// Used for custom messages.
     /// </summary>
     /// <param name="message">Customized message.</param>
-    public WorkspaceTitleTooShortException(string message) : base(message) { }
+    public BoardTitleTooLongException(string message) : base(message) { }
 
     /// <summary>
     /// Used for inner exceptions (Like when an exception is thrown inside another exception)
     /// </summary>
     /// <param name="message">Customized message.</param>
     /// <param name="innerException">Inner exception.</param>
-    public WorkspaceTitleTooShortException(string message, Exception innerException) : base(message, innerException) { }
+    public BoardTitleTooLongException(string message, Exception innerException) : base(message, innerException) { }
 
     /// <summary>
     /// Used for serialization.
     /// </summary>
     /// <param name="info"></param>
     /// <param name="context"></param>
-    protected WorkspaceTitleTooShortException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    protected BoardTitleTooLongException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
