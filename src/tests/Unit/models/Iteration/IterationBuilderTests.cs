@@ -3,6 +3,7 @@ using domain.exceptions.iteration.iterationTitle;
 using domain.exceptions;
 using domain.models.iteration;
 using domain.models.workItem;
+using domain.exceptions.iteration;
 
 namespace Unit.models.iteration;
 
@@ -152,7 +153,7 @@ public class IterationBuilderTests
 
         // Assert
         Assert.True(result.IsFailure);
-        Assert.Contains(result.Errors, e => e is ArgumentNullException);
+        Assert.Contains(result.Errors, e => e is IterationWorkItemNotFoundException);
     }
 
     /// <summary>
