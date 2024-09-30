@@ -1,5 +1,8 @@
 
 
+using domain.exceptions;
+using domain.exceptions.Organisation;
+using domain.exceptions.Workspace.WorkspaceTitle;
 using domain.models.organisation;
 using domain.models.user;
 
@@ -110,5 +113,29 @@ public class OrganisationBuilderTests
         // Assert
         Assert.True(result.IsFailure);
     }
+
+    [Fact]
+    public void OrganisationBuilder_Changes_OrganisationNameEmptyException_To_RequiredFieldMissingException()
+    {
+        // Arrange
+        var builder = OrganisationBuilder.Create();
+
+        // Act
+        var result = builder
+            .WithName("") // Empty title triggers WorkspaceTitleEmptyException
+            .Build();
+
+        // Assert
+        Assert.True(result.IsFailure);
+        // Ensure that the error list contains RequiredFieldMissingException instead of WorkspaceTitleEmptyException
+        Assert.Contains(result.Errors, e => e is RequiredFieldMissingException);
+        Assert.DoesNotContain(result.Errors, e => e is OrganisationNameEmptyException);
+
+        // Check if the inner exception to RequiredFieldMissingException is WorkspaceTitleEmptyException
+        var requiredFieldMissingException = result.Errors.OfType<RequiredFieldMissingException>().FirstOrDefault();
+        Assert.NotNull(requiredFieldMissingException);
+        Assert.IsType<OrganisationNameEmptyException>(requiredFieldMissingException.InnerException);
+    }
+
     
 }
