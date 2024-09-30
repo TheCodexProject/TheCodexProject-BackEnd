@@ -4,6 +4,7 @@ using domain.models.workItem;
 using OperationResult;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -34,12 +35,12 @@ public class Board
     /// <summary>
     /// Exposes a read-only view of filter expressions.
     /// </summary>
-    public IEnumerable<FilterExpression> Filters => _filters.AsReadOnly();
+    public ReadOnlyCollection<FilterExpression> Filters => _filters.AsReadOnly();
 
     /// <summary>
     /// Exposes a read-only view of order-by expressions.
     /// </summary>
-    public IEnumerable<OrderByExpression> OrderByExpressions => _orderByExpressions.AsReadOnly();
+    public ReadOnlyCollection<OrderByExpression> OrderByExpressions => _orderByExpressions.AsReadOnly();
 
     /// <summary>
     /// Creates a new instance of <see cref="Board"/> with default values.
