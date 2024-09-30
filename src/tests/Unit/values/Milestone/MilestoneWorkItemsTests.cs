@@ -2,6 +2,7 @@
 using domain.models.workItem;
 using Xunit;
 using System;
+using OperationResult;
 
 namespace Unit.models.milestone
 {
@@ -18,9 +19,10 @@ namespace Unit.models.milestone
             var workItem = WorkItemBuilder.Create().MakeDefault();
 
             // Act
-            milestone.AddWorkItem(workItem);
+            var result = milestone.AddWorkItem(workItem);
 
             // Assert
+            Assert.True(result.IsSuccess);
             Assert.Contains(workItem.Value.Id, milestone.WorkItems);
         }
 
