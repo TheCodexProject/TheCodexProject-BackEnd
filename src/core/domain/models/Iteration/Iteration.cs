@@ -1,9 +1,9 @@
-﻿using domain.models.iteration.values;
+﻿using domain.exceptions.iteration;
+using domain.models.iteration.values;
 using domain.models.shared;
 using domain.models.workItem;
 using OperationResult;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace domain.models.iteration;
 
@@ -74,7 +74,7 @@ public class Iteration
     {
         if (workItem == null)
         {
-            return Result.Failure(new ArgumentNullException(nameof(workItem), "WorkItem cannot be null"));
+            Result.Failure(new IteractionWorkItemNullException());
         }
 
         _workItems.Add(workItem.Id);
@@ -90,13 +90,13 @@ public class Iteration
     {
         if (workItem == null)
         {
-            throw new ArgumentNullException(nameof(workItem), "WorkItem cannot be null");
+            Result.Failure(new IteractionWorkItemNullException());
         }
 
         if (!_workItems.Contains(workItem.Id))
         {
             // WorkItem not found, return failure with a specific exception.
-            return Result.Failure(new KeyNotFoundException($"The given WorkItem with ID '{workItem.Id}' was not found in the iteration."));
+            return Result.Failure(new IterationWorkItemNotFoundException());
         }
 
         _workItems.Remove(workItem.Id);

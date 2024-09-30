@@ -3,30 +3,30 @@
 namespace domain.exceptions.iteration;
 
 [Serializable]
-public class IterationWorkItemNotFoundException : Exception
+public class IteractionWorkItemNullException : Exception
 {
     /// <summary>
     /// The default message.
     /// </summary>
-    public IterationWorkItemNotFoundException() : base("WorkItem not found in Iteration") { }
+    public IteractionWorkItemNullException() : base("WorkItem cannot be null") { }
 
     /// <summary>
     /// Used for custom messages.
     /// </summary>
     /// <param name="message">Customized message.</param>
-    public IterationWorkItemNotFoundException(string message) : base(message) { }
+    public IteractionWorkItemNullException(string message) : base(message) { }
 
     /// <summary>
     /// Used for inner exceptions (Like when an exception is thrown inside another exception)
     /// </summary>
     /// <param name="message">Customized message.</param>
     /// <param name="innerException">Inner exception.</param>
-    public IterationWorkItemNotFoundException(string message, Exception innerException) : base(message, innerException) { }
+    public IteractionWorkItemNullException(string message, Exception innerException) : base(message, innerException) { }
 
     /// <summary>
     /// Used for serialization.
     /// </summary>
     /// <param name="info"></param>
     /// <param name="context"></param>
-    protected IterationWorkItemNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    protected IteractionWorkItemNullException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
