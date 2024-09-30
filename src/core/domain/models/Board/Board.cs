@@ -3,7 +3,10 @@ using domain.models.shared;
 using domain.models.workItem;
 using OperationResult;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Linq.Expressions;
+using domain.exceptions.board;
+using domain.exceptions.Board;
 
 namespace domain.models.board;
 
@@ -100,15 +103,13 @@ public class Board
     /// <param name="filterExpression">The filter expression to remove.</param>
     public Result RemoveFilter(FilterExpression filterExpression)
     {
-        var existingFilter = _filters.FirstOrDefault(f => f.Equals(filterExpression));
-
-        if (existingFilter == null)
+        if (_filters.Contains(filterExpression))
         {
             // Filter not found, return failure.
-            return Result.Failure();
+            return Result.Failure(new BoardFilterNotFoundException());
         }
 
-        _filters.Remove(existingFilter);
+        _filters.Remove(filterExpression);
         return Result.Success();
     }
 
@@ -136,15 +137,14 @@ public class Board
     /// <param name="orderByExpression">The order-by expression to remove.</param>
     public Result RemoveOrderBy(OrderByExpression orderByExpression)
     {
-        var existingOrderBy = _orderByExpressions.FirstOrDefault(o => o.Equals(orderByExpression));
 
-        if (existingOrderBy == null)
+        if (_orderByExpressions.Contains(orderByExpression))
         {
             // OrderBy expression not found, return failure.
-            return Result.Failure();
+            return Result.Failure(new BoardOrderByNotFoundException());
         }
 
-        _orderByExpressions.Remove(existingOrderBy);
+        _orderByExpressions.Remove(orderByExpression);
         return Result.Success();
     }
 }
