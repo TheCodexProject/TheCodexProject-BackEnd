@@ -58,7 +58,7 @@ public class WorkItem
     // public List<Documentation> Documentations { get; private set; }
     
     /// <summary>
-    /// A list of sub items that are related to the WorkItem.
+    /// A list of sub-items that are related to the WorkItem.
     /// </summary>
     private List<WorkItem> _subItems { get; }
     
