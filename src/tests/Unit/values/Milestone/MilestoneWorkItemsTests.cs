@@ -1,46 +1,52 @@
-﻿using domain.models.milestone;
+﻿using domain.exceptions.milestone;
+using domain.models.milestone;
 using domain.models.workItem;
-using Xunit;
-using System;
-using OperationResult;
 
 namespace Unit.models.milestone
 {
     public class MilestoneTests
     {
         /// <summary>
-        /// Test to ensure a work item can be successfully added to the Milestone.
+        /// Ensures that a list of work items can be added to the milestone successfully.
         /// </summary>
         [Fact]
-        public void AddWorkItem_Should_Add_WorkItem_To_Milestone()
+        public void AddWorkItems_Should_Add_WorkItems_To_Milestone()
         {
             // Arrange
             var milestone = Milestone.Create();
-            var workItem = WorkItemBuilder.Create().MakeDefault();
+            var workItems = MilestoneConstants.DefaultWorkItems;
 
             // Act
-            var result = milestone.AddWorkItem(workItem);
+            var result = milestone.AddWorkItems(workItems);
 
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.Contains(workItem.Value.Id, milestone.WorkItems);
+            foreach (var workItem in workItems)
+            {
+                Assert.Contains(workItem.Id, milestone.WorkItems);
+            }
         }
 
         /// <summary>
-        /// Test to ensure an exception is thrown when trying to add a null work item.
+        /// Ensures that adding a null list of work items throws an exception.
         /// </summary>
         [Fact]
-        public void AddWorkItem_Should_Throw_Exception_When_WorkItem_Is_Null()
+        public void AddWorkItems_Should_Return_Failure_When_WorkItems_List_Is_Null()
         {
             // Arrange
             var milestone = Milestone.Create();
+            List<WorkItem> workItems = null;
 
-            // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => milestone.AddWorkItem(null));
+            // Act
+            var result = milestone.AddWorkItems(workItems);
+
+            // Assert
+            Assert.True(result.IsFailure);
+            Assert.Contains(result.Errors, e => e is MilestoneWorkItemNotFoundException);
         }
 
         /// <summary>
-        /// Test to ensure a work item can be successfully removed from the Milestone.
+        /// Ensures that a work item can be removed from the milestone.
         /// </summary>
         [Fact]
         public void RemoveWorkItem_Should_Remove_WorkItem_From_Milestone()
@@ -48,31 +54,39 @@ namespace Unit.models.milestone
             // Arrange
             var milestone = Milestone.Create();
             var workItem = WorkItemBuilder.Create().MakeDefault();
-            milestone.AddWorkItem(workItem);
+            var workItems = new List<WorkItem> { workItem };
+            milestone.AddWorkItems(workItems);
 
             // Act
             var result = milestone.RemoveWorkItem(workItem);
 
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.DoesNotContain(workItem.Value.Id, milestone.WorkItems);
+            foreach (var item in workItems)
+            {
+                Assert.DoesNotContain(item.Id, milestone.WorkItems);
+            }
         }
 
         /// <summary>
-        /// Test to ensure an exception is thrown when trying to remove a null work item.
+        /// Ensures that removing a null work item throws an exception.
         /// </summary>
         [Fact]
-        public void RemoveWorkItem_Should_Throw_Exception_When_WorkItem_Is_Null()
+        public void RemoveWorkItem_Should_Return_Failure_When_WorkItem_Is_Null()
         {
             // Arrange
             var milestone = Milestone.Create();
 
-            // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => milestone.RemoveWorkItem(null));
+            // Act
+            var result = milestone.RemoveWorkItem(null);
+
+            // Assert
+            Assert.True(result.IsFailure);
+            Assert.Contains(result.Errors, e => e is MilestoneWorkItemNotFoundException);
         }
 
         /// <summary>
-        /// Test to ensure removing a work item that does not exist in the Milestone returns a failure result.
+        /// Ensures that removing a work item that does not exist returns a failure.
         /// </summary>
         [Fact]
         public void RemoveWorkItem_Should_Return_Failure_When_WorkItem_Does_Not_Exist()
@@ -89,7 +103,7 @@ namespace Unit.models.milestone
         }
 
         /// <summary>
-        /// Test to ensure a Milestone is created with an empty list of work items.
+        /// Ensures that a milestone is initialized with an empty list of work items.
         /// </summary>
         [Fact]
         public void Create_Should_Initialize_With_Empty_WorkItems_List()

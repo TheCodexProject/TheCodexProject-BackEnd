@@ -1,7 +1,7 @@
 using domain.models.workItem;
 using domain.models.workItem.values;
 
-namespace Unit.models.WorkItem;
+namespace Unit.models.workItem;
 
 public class WorkItemBuilderTests
 {

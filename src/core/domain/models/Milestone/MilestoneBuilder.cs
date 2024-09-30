@@ -2,6 +2,7 @@
 using domain.exceptions.milestone.milestoneTitle;
 using Microsoft.VisualBasic;
 using OperationResult;
+using domain.models.workItem;
 
 namespace domain.models.milestone;
 
@@ -38,6 +39,18 @@ public class MilestoneBuilder
     public MilestoneBuilder WithTitle(string title)
     {
         var result = _milestone.UpdateTitle(title);
+
+        if (result.IsFailure)
+        {
+            _errors.AddRange(result.Errors);
+        }
+
+        return this;
+    }
+
+    public MilestoneBuilder WithWorkItems(List<WorkItem> workItems)
+    {
+        var result = _milestone.AddWorkItems(workItems);
 
         if (result.IsFailure)
         {

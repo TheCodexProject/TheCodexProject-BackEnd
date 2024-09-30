@@ -4,6 +4,7 @@ using domain.models.shared;
 using domain.models.workItem;
 using OperationResult;
 using System.Collections.ObjectModel;
+using System.IO.IsolatedStorage;
 
 namespace domain.models.milestone;
 
@@ -58,13 +59,21 @@ public class Milestone
     /// Adds a workitem to the list of workitems.
     /// </summary>
     /// <param name="workItem">The workitem to add.</param>
-    public Result AddWorkItem(WorkItem workItem)
+    public Result AddWorkItems(List<WorkItem> workItems)
     {
-        if (workItem == null)
+        if (workItems == null)
         {
             return Result.Failure(new MilestoneWorkItemNotFoundException());
         }
-        _workItems.Add(workItem.Id);
+
+        foreach (var workItem in workItems)
+        {
+            if (workItem == null)
+            {
+                return Result.Failure(new MilestoneWorkItemNotFoundException());
+            }
+            _workItems.Add(workItem.Id);
+        }
 
         return Result.Success();
     }
