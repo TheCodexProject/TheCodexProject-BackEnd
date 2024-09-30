@@ -1,3 +1,5 @@
+using domain.models.documentation;
+using domain.models.shared;
 using domain.models.workItem.values;
 
 namespace domain.models.workItem;
@@ -28,4 +30,18 @@ public static class WorkItemConstants
     /// A default type to be used for testing purposes.
     /// </summary>
     public const WorkItemType Type = WorkItemType.Task;
+    
+    public static List<WorkItem> DefaultWorkItems =>
+    [
+        WorkItem.Create(),
+        WorkItem.Create(),
+        WorkItem.Create()
+    ];
+
+    public static List<Id<Documentation>> DefaultDocumentations =>
+    [
+        Id<Documentation>.Create(),
+        Id<Documentation>.Create(),
+        Id<Documentation>.Create()
+    ];
 }

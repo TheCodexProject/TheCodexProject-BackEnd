@@ -1,6 +1,8 @@
 ﻿using domain.exceptions;
+using domain.exceptions.Workspace;
 using domain.exceptions.Workspace.WorkspaceTitle;
 using domain.interfaces;
+using domain.models.Interfaces;
 using OperationResult;
 
 namespace domain.models.workspace;
@@ -41,6 +43,17 @@ public class WorkspaceBuilder : IBuilder<Workspace>
 
         return this;
     }
+    
+    /// <summary>
+    /// Function to add owner to the build of <see cref="WorkspaceBuilder"/>.
+    /// </summary>
+    /// <param name="owner">Owner to use.</param>
+    /// <returns></returns>
+    public WorkspaceBuilder withOwner(IOwnership owner)
+    {
+        workspace.UpdateOwner(owner);
+        return this;
+    }
 
     /// <summary>
     /// Function to the build <see cref="WorkspaceBuilder"/>.
@@ -65,7 +78,12 @@ public class WorkspaceBuilder : IBuilder<Workspace>
                 _errors.Add(new RequiredFieldMissingException("Title is required", new WorkspaceTitleEmptyException()));
             }
         }
-
+        
+        if(workspace.Owner == null)
+        {
+            _errors.Add(new RequiredFieldMissingException("Owner is required",new WorkspaceOwnerEmptyException()));
+        }
+        
         return _errors.Any() ? Result<Workspace>.Failure(_errors.ToArray()) : workspace;
     }
 
@@ -74,6 +92,6 @@ public class WorkspaceBuilder : IBuilder<Workspace>
     /// </summary>
     public Result<Workspace> MakeDefault()
     {
-        return new WorkspaceBuilder().withTitle(WorkspaceConstants.DefaultTitle).Build();
+        return withTitle(WorkspaceConstants.DefaultTitle).withOwner(WorkspaceConstants.DefaultOwner).Build();
     }
 }

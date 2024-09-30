@@ -1,10 +1,11 @@
+using domain.models.Interfaces;
 using domain.models.shared;
 using domain.models.user.values;
 using OperationResult;
 
 namespace domain.models.user;
 
-public class User
+public class User : IOwnership
 {
     /// <summary>
     /// The unique identifier of the user.

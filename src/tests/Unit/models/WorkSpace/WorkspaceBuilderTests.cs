@@ -1,5 +1,6 @@
 ﻿using domain.exceptions.Workspace.WorkspaceTitle;
 using domain.exceptions;
+using domain.exceptions.Workspace;
 using domain.models.workspace;
 using Xunit;
 
@@ -15,7 +16,8 @@ public class WorkspaceBuilderTests
         var builder = WorkspaceBuilder.Create();
 
         // Act
-        var result = builder.MakeDefault();
+        var result = builder
+            .MakeDefault();
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -28,10 +30,12 @@ public class WorkspaceBuilderTests
         // Arrange
     
         var builder = WorkspaceBuilder.Create();
-
+        var user = domain.models.user.User.Create();
+        
         // Act
         var result = builder
             .withTitle(WorkspaceConstants.DefaultTitle)
+            .withOwner(user)
             .Build();
 
         // Assert
@@ -46,7 +50,8 @@ public class WorkspaceBuilderTests
         var builder = WorkspaceBuilder.Create();
 
         // Act
-        var result = builder.Build();
+        var result = builder
+            .Build();
 
         // Assert
         Assert.True(result.IsFailure);
@@ -60,7 +65,9 @@ public class WorkspaceBuilderTests
         var builder = WorkspaceBuilder.Create();
 
         // Act
-        var result = builder.withTitle("").Build();
+        var result = builder
+            .withTitle("")
+            .Build();
 
         // Assert
         Assert.True(result.IsFailure);
@@ -74,7 +81,10 @@ public class WorkspaceBuilderTests
         var builder = WorkspaceBuilder.Create();
 
         // Act
-        var result = builder.withTitle(null).Build();
+        var result = builder
+            .withTitle(null)
+            .withOwner(null)
+            .Build();
 
         // Assert
         Assert.True(result.IsFailure);
@@ -102,6 +112,30 @@ public class WorkspaceBuilderTests
         var requiredFieldMissingException = result.Errors.OfType<RequiredFieldMissingException>().FirstOrDefault();
         Assert.NotNull(requiredFieldMissingException);
         Assert.IsType<WorkspaceTitleEmptyException>(requiredFieldMissingException.InnerException);
+    }
+    
+    // Test to verify that not setting the owner returns a failure with RequiredFieldMissingException with an inner exception of WorkspaceOwnerEmptyException.
+    [Fact]
+    public void WorkspaceBuilder_Changes_WorkspaceOwnerEmptyException_To_RequiredFieldMissingException()
+    {
+        // Arrange
+        var builder = WorkspaceBuilder.Create();
+
+        // Act
+        var result = builder
+            .withTitle("Title")
+            .Build();
+
+        // Assert
+        Assert.True(result.IsFailure);
+        // Ensure that the error list contains RequiredFieldMissingException instead of WorkspaceOwnerEmptyException
+        Assert.Contains(result.Errors, e => e is RequiredFieldMissingException);
+        Assert.DoesNotContain(result.Errors, e => e is WorkspaceOwnerEmptyException);
+
+        // Check if the inner exception of RequiredFieldMissingException is WorkspaceOwnerEmptyException
+        var requiredFieldMissingException = result.Errors.OfType<RequiredFieldMissingException>().FirstOrDefault();
+        Assert.NotNull(requiredFieldMissingException);
+        Assert.IsType<WorkspaceOwnerEmptyException>(requiredFieldMissingException.InnerException);
     }
 }
 
