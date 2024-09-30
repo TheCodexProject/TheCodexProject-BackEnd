@@ -40,12 +40,12 @@ public class Workspace
     /// <summary>
     /// Holds a private list of contacts/users.
     /// </summary>
-    private readonly List<User> _contacts = new List<User>();
+    private readonly List<Id<User>> _contacts = new List<Id<User>>();
 
     /// <summary>
     /// Exposes a read-only view of contacts/users.
     /// </summary>
-    public ReadOnlyCollection<User> Contacts => _contacts.AsReadOnly();
+    public ReadOnlyCollection<Id<User>> Contacts => _contacts.AsReadOnly();
 
     /// <summary>
     /// Holds a private list of documents.
@@ -138,12 +138,12 @@ public class Workspace
             return Result.Failure(new WorkspaceContactNotFoundException("The given contact is null"));
         }
 
-        if (_contacts.Contains(contact))
+        if (_contacts.Contains(contact.Id))
         {
             return Result.Failure(new WorkspaceContactAlreadyExistsException());
         }
 
-        _contacts.Add(contact);
+        _contacts.Add(contact.Id);
         return Result.Success();
     }
 
@@ -153,12 +153,12 @@ public class Workspace
     /// <param name="contact">The contact to remove.</param>
     public Result RemoveContact(User contact)
     {
-        if (!_contacts.Contains(contact))
+        if (!_contacts.Contains(contact.Id))
         {
             return Result.Failure(new WorkspaceContactNotFoundException());
         }
 
-        _contacts.Remove(contact);
+        _contacts.Remove(contact.Id);
         return Result.Success();
     }
 
