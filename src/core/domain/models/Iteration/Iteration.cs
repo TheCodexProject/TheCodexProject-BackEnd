@@ -2,6 +2,7 @@
 using domain.models.shared;
 using domain.models.workItem;
 using OperationResult;
+using System.Collections.ObjectModel;
 
 namespace domain.models.iteration;
 
@@ -20,7 +21,7 @@ public class Iteration
     /// <summary>
     /// Holds a IEnumerable of WorkItems.
     /// </summary>
-    public IEnumerable<Id<WorkItem>> WorkItems => _workItems;
+    public ReadOnlyCollection<Id<WorkItem>> WorkItems => _workItems.AsReadOnly();
     private readonly List<Id<WorkItem>> _workItems;
 
     /// <summary>
