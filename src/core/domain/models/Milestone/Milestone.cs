@@ -77,7 +77,7 @@ public class Milestone
     {
         if (workItem == null)
         {
-            return Result.Failure(new MilestoneWorkItemErrorException());
+            return Result.Failure(new MilestoneWorkItemNotFoundException());
         }
 
         var existingWorkItem = _workItems.FirstOrDefault(wi => wi.Equals(workItem.Id));
